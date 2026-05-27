@@ -36,10 +36,12 @@ with st.sidebar:
 
     athlete_options = []
     year_options = []
+    indoor_options = []
     default_years: list[str] = []
     if "df" in st.session_state and st.session_state["df"] is not None and not st.session_state["df"].empty:
         athlete_options = sorted(st.session_state["df"]["athlete_name"].dropna().unique().tolist())
         year_options = sorted(st.session_state["df"]["year"].dropna().astype(int).astype(str).unique().tolist())
+        indoor_options = sorted(st.session_state["df"]["indoor"].dropna().unique().tolist())
         default_years = year_options[-3:]
 
     selected_athlete = st.multiselect(
@@ -54,7 +56,13 @@ with st.sidebar:
         default=default_years,
         help="Select one or more years to filter the data.",
     )
-
+    selected_indoor_options = ["All"] + indoor_options
+    selected_indoor = st.selectbox(
+        "Filter indoor/outdoor",
+        options=selected_indoor_options,
+        index=0,
+        help="Choose indoor, outdoor, or All performances.",
+    )
     scrape_button = st.button("Refresh")
 
 athlete_ids = [line.strip() for line in athlete_ids_text.splitlines() if line.strip()]
@@ -85,6 +93,10 @@ if selected_athlete:
 # Apply year filter if selected
 if selected_year:
     df = df[df["year"].astype(str).isin(selected_year)]
+
+# Apply indoor/outdoor filter if selected
+if selected_indoor != "All":
+    df = df[df["indoor"] == selected_indoor]
 
 st.header("Dataset summary")
 col1, col2, col3 = st.columns(3)
