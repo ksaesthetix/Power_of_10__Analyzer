@@ -32,20 +32,28 @@ with st.sidebar:
         )
         scope = st.selectbox("Performance scope", ["career", "current"], help="Career parses full history; current only parses the current year.")
 
-    max_events = st.slider("Top events to show", min_value=1, max_value=12, value=12)
+    max_events = st.slider("Top events to show", min_value=1, max_value=50, value=40)
 
-    athlete_options = ["All"]
-    year_options = ["All"]
+    athlete_options = []
+    year_options = []
     if "df" in st.session_state and st.session_state["df"] is not None and not st.session_state["df"].empty:
-        athlete_options = ["All"] + sorted(st.session_state["df"]["athlete_name"].dropna().unique().tolist())
-        year_options = ["All"] + sorted(st.session_state["df"]["year"].dropna().astype(int).astype(str).unique().tolist())
+        athlete_options = sorted(st.session_state["df"]["athlete_name"].dropna().unique().tolist())
+        year_options = sorted(st.session_state["df"]["year"].dropna().astype(int).astype(str).unique().tolist())
 
-    selected_athlete = st.selectbox("Filter athlete", athlete_options, index=0)
-    selected_year = st.selectbox("Filter year", year_options, index=0)
+    selected_athlete = st.multiselect(
+        "Filter athlete",
+        options=athlete_options,
+        default=athlete_options,
+        help="Select one or more athletes to filter the data.",
+    )
+    selected_year = st.multiselect(
+        "Filter year",
+        options=year_options,
+        default=year_options,
+        help="Select one or more years to filter the data.",
+    )
 
-    st.markdown("---")
-    st.write("Scraping may take time when the roster is large.")
-    scrape_button = st.button("Scrape / Refresh")
+    scrape_button = st.button("Refresh")
 
 athlete_ids = [line.strip() for line in athlete_ids_text.splitlines() if line.strip()]
 
@@ -69,12 +77,12 @@ if df is None or df.empty:
 #st.success(f"Loaded {len(df)} performance rows from {df['athlete_name'].nunique()} athletes.")
 
 # Apply athlete filter if selected
-if selected_athlete != "All":
-    df = df[df["athlete_name"] == selected_athlete]
+if selected_athlete:
+    df = df[df["athlete_name"].isin(selected_athlete)]
 
 # Apply year filter if selected
-if selected_year != "All":
-    df = df[df["year"].astype(str) == selected_year]
+if selected_year:
+    df = df[df["year"].astype(str).isin(selected_year)]
 
 st.header("Dataset summary")
 col1, col2, col3 = st.columns(3)
