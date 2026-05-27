@@ -17,7 +17,7 @@ st.markdown(
 )
 
 with st.sidebar:
-    st.header("Scrape settings")
+    st.header("Filters")
     DEFAULT_COACH_ID = "04129636-6880-4268-9266-de639957a483"
     coach_id = DEFAULT_COACH_ID
     athlete_ids_text = ""
@@ -109,19 +109,41 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
         st.write(f"{event}: {len(subset)} rows")
         st.dataframe(subset[show_columns].reset_index(drop=True), use_container_width=True)
         if subset["perf_numeric"].notna().any():
+            plot_subset = subset[subset["perf_numeric"].notna()]
             fig = px.line(
-                subset[subset["perf_numeric"].notna()],
+                plot_subset,
                 x="year",
                 y="perf_numeric",
                 color="athlete_name",
                 markers=True,
                 title=f"{event} progression",
                 hover_data=["performance", "venue", "meeting", "date"],
+                template="plotly_white",
             )
+            fig.update_traces(
+                mode="lines+markers",
+                marker=dict(size=8, line=dict(width=1, color="DarkSlateGrey")),
+                line=dict(width=2),
+            )
+            fig.update_layout(
+                hovermode="x unified",
+                legend_title_text="Athlete",
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=1.02,
+                    xanchor="right",
+                    x=1,
+                    title_font_size=11,
+                ),
+                margin=dict(l=40, r=30, t=60, b=40),
+                font=dict(size=12),
+            )
+            fig.update_xaxes(title_text="Year", showgrid=True, gridcolor="LightGray")
             if subset["event_kind"].iloc[0] == "time":
-                fig.update_yaxes(title_text="Seconds", autorange="reversed")
+                fig.update_yaxes(title_text="Seconds", autorange="reversed", showgrid=True, gridcolor="LightGray")
             else:
-                fig.update_yaxes(title_text="Meters")
+                fig.update_yaxes(title_text="Meters", showgrid=True, gridcolor="LightGray")
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("No numeric plot available for this event.")
