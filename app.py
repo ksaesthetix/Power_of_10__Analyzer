@@ -122,7 +122,7 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
             )
             fig.update_traces(
                 mode="lines+markers",
-                marker=dict(size=8, line=dict(width=1, color="DarkSlateGrey")),
+                marker=dict(size=8, line=dict(width=1, color="white")),
                 line=dict(width=2),
             )
             fig.update_layout(
@@ -135,15 +135,37 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
                     xanchor="right",
                     x=1,
                     title_font_size=11,
+                    bgcolor="rgba(255,255,255,0.8)",
+                    bordercolor="LightGray",
+                    borderwidth=1,
                 ),
                 margin=dict(l=40, r=30, t=60, b=40),
                 font=dict(size=12),
+                plot_bgcolor="white",
+                paper_bgcolor="white",
             )
-            fig.update_xaxes(title_text="Year", showgrid=True, gridcolor="LightGray")
+            fig.update_xaxes(
+                title_text="Year",
+                showgrid=False,
+                showline=True,
+                linecolor="LightGray",
+                tickmode="linear",
+            )
             if subset["event_kind"].iloc[0] == "time":
-                fig.update_yaxes(title_text="Seconds", autorange="reversed", showgrid=True, gridcolor="LightGray")
+                fig.update_yaxes(
+                    title_text="Seconds",
+                    autorange="reversed",
+                    showgrid=False,
+                    showline=True,
+                    linecolor="LightGray",
+                )
             else:
-                fig.update_yaxes(title_text="Meters", showgrid=True, gridcolor="LightGray")
+                fig.update_yaxes(
+                    title_text="Meters",
+                    showgrid=False,
+                    showline=True,
+                    linecolor="LightGray",
+                )
             st.plotly_chart(fig, use_container_width=True)
         else:
             st.info("No numeric plot available for this event.")
