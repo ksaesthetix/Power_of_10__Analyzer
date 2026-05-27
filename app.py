@@ -5,12 +5,12 @@ import pandas as pd
 from po10_scraper import build_dataframe, infer_event_kind, parse_perf_numeric
 
 st.set_page_config(
-    page_title="Power of 10 Career Analyzer",
+    page_title="Power of 10 Analyzer",
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-st.title("Power of 10 Career Analyzer")
+st.title("Power of 10 Analyzer")
 st.markdown(
     "Use this app to scrape Power of 10 athlete performance histories, "
     "then explore event-by-event career progression charts and tables."
