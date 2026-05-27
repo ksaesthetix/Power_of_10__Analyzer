@@ -2,7 +2,6 @@ import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
-
 from po10_scraper import build_dataframe, infer_event_kind, parse_perf_numeric
 
 st.set_page_config(
@@ -21,14 +20,29 @@ with st.sidebar:
     st.header("Scrape settings")
     DEFAULT_COACH_ID = "04129636-6880-4268-9266-de639957a483"
     coach_id = DEFAULT_COACH_ID
-    st.markdown(f"**Coach ID:** {coach_id}")
-    athlete_ids_text = st.text_area(
-        "Athlete IDs (one per line)",
-        value="",
-        help="Optional: paste athlete IDs here to scrape specific athletes instead of a coach roster.",
-    )
-    scope = st.selectbox("Performance scope", ["career", "current"], help="Career parses full history; current only parses the current year.")
+    athlete_ids_text = ""
+    scope = "career"
+
+    if False:
+        st.markdown(f"**Coach ID:** {coach_id}")
+        athlete_ids_text = st.text_area(
+            "Athlete IDs (one per line)",
+            value="",
+            help="Optional: paste athlete IDs here to scrape specific athletes instead of a coach roster.",
+        )
+        scope = st.selectbox("Performance scope", ["career", "current"], help="Career parses full history; current only parses the current year.")
+
     max_events = st.slider("Top events to show", min_value=1, max_value=12, value=12)
+
+    athlete_options = ["All"]
+    year_options = ["All"]
+    if "df" in st.session_state and st.session_state["df"] is not None and not st.session_state["df"].empty:
+        athlete_options = ["All"] + sorted(st.session_state["df"]["athlete_name"].dropna().unique().tolist())
+        year_options = ["All"] + sorted(st.session_state["df"]["year"].dropna().astype(int).astype(str).unique().tolist())
+
+    selected_athlete = st.selectbox("Filter athlete", athlete_options, index=0)
+    selected_year = st.selectbox("Filter year", year_options, index=0)
+
     st.markdown("---")
     st.write("Scraping may take time when the roster is large.")
     scrape_button = st.button("Scrape / Refresh")
@@ -54,19 +68,13 @@ if df is None or df.empty:
 
 #st.success(f"Loaded {len(df)} performance rows from {df['athlete_name'].nunique()} athletes.")
 
-st.sidebar.markdown("---")
-
-# Athlete filter: show a dropdown of athlete names (All = no filter)
-with st.sidebar:
-    if df is not None and not df.empty:
-        athlete_options = ["All"] + sorted(df["athlete_name"].dropna().unique().tolist())
-        selected_athlete = st.selectbox("Filter athlete", athlete_options, index=0)
-    else:
-        selected_athlete = "All"
-
 # Apply athlete filter if selected
 if selected_athlete != "All":
     df = df[df["athlete_name"] == selected_athlete]
+
+# Apply year filter if selected
+if selected_year != "All":
+    df = df[df["year"].astype(str) == selected_year]
 
 st.header("Dataset summary")
 col1, col2, col3 = st.columns(3)
