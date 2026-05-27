@@ -118,11 +118,11 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
                 markers=True,
                 title=f"{event} progression",
                 hover_data=["performance", "venue", "meeting", "date"],
-                template="plotly_white",
+                template="plotly_dark",
             )
             fig.update_traces(
                 mode="lines+markers",
-                marker=dict(size=8, line=dict(width=1, color="white")),
+                marker=dict(size=8, line=dict(width=1, color="rgba(255,255,255,0.7)")),
                 line=dict(width=2),
             )
             fig.update_layout(
@@ -135,21 +135,23 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
                     xanchor="right",
                     x=1,
                     title_font_size=11,
-                    bgcolor="rgba(255,255,255,0.8)",
-                    bordercolor="LightGray",
+                    bgcolor="rgba(0,0,0,0.5)",
+                    bordercolor="rgba(255,255,255,0.2)",
                     borderwidth=1,
                 ),
                 margin=dict(l=40, r=30, t=60, b=40),
                 font=dict(size=12),
-                plot_bgcolor="white",
-                paper_bgcolor="white",
+                plot_bgcolor="rgba(0,0,0,0)",
+                paper_bgcolor="rgba(0,0,0,0)",
             )
             fig.update_xaxes(
                 title_text="Year",
                 showgrid=False,
                 showline=True,
-                linecolor="LightGray",
+                linecolor="rgba(255,255,255,0.2)",
                 tickmode="linear",
+                tickfont_color="rgba(255,255,255,0.8)",
+                title_font_color="rgba(255,255,255,0.9)",
             )
             if subset["event_kind"].iloc[0] == "time":
                 fig.update_yaxes(
@@ -157,14 +159,18 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
                     autorange="reversed",
                     showgrid=False,
                     showline=True,
-                    linecolor="LightGray",
+                    linecolor="rgba(255,255,255,0.2)",
+                    tickfont_color="rgba(255,255,255,0.8)",
+                    title_font_color="rgba(255,255,255,0.9)",
                 )
             else:
                 fig.update_yaxes(
                     title_text="Meters",
                     showgrid=False,
                     showline=True,
-                    linecolor="LightGray",
+                    linecolor="rgba(255,255,255,0.2)",
+                    tickfont_color="rgba(255,255,255,0.8)",
+                    title_font_color="rgba(255,255,255,0.9)",
                 )
             st.plotly_chart(fig, use_container_width=True)
         else:
