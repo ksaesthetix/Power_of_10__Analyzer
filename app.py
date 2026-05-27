@@ -126,7 +126,8 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
                 line=dict(width=2),
             )
             fig.update_layout(
-                hovermode="x unified",
+                hovermode="closest",
+                hoverlabel=dict(bgcolor="rgba(0, 0, 0, 0.8)", font_color="white"),
                 legend_title_text="Athlete",
                 legend=dict(
                     orientation="h",
@@ -152,6 +153,7 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
                 tickmode="linear",
                 tickfont_color="rgba(255,255,255,0.8)",
                 title_font_color="rgba(255,255,255,0.9)",
+                showspikes=False,
             )
             if subset["event_kind"].iloc[0] == "time":
                 fig.update_yaxes(
@@ -162,6 +164,7 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
                     linecolor="rgba(255,255,255,0.2)",
                     tickfont_color="rgba(255,255,255,0.8)",
                     title_font_color="rgba(255,255,255,0.9)",
+                    showspikes=False,
                 )
             else:
                 fig.update_yaxes(
@@ -171,6 +174,7 @@ for tab, event in zip(tabs, df["event"].value_counts().head(max_events).index.to
                     linecolor="rgba(255,255,255,0.2)",
                     tickfont_color="rgba(255,255,255,0.8)",
                     title_font_color="rgba(255,255,255,0.9)",
+                    showspikes=False,
                 )
             st.plotly_chart(fig, use_container_width=True)
         else:
