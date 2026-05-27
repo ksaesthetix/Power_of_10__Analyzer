@@ -36,20 +36,22 @@ with st.sidebar:
 
     athlete_options = []
     year_options = []
+    default_years: list[str] = []
     if "df" in st.session_state and st.session_state["df"] is not None and not st.session_state["df"].empty:
         athlete_options = sorted(st.session_state["df"]["athlete_name"].dropna().unique().tolist())
         year_options = sorted(st.session_state["df"]["year"].dropna().astype(int).astype(str).unique().tolist())
+        default_years = year_options[-3:]
 
     selected_athlete = st.multiselect(
         "Filter athlete",
         options=athlete_options,
-        default=athlete_options,
+        default=[],
         help="Select one or more athletes to filter the data.",
     )
     selected_year = st.multiselect(
         "Filter year",
         options=year_options,
-        default=year_options,
+        default=default_years,
         help="Select one or more years to filter the data.",
     )
 
