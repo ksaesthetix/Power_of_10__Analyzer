@@ -247,357 +247,258 @@ rolling_df = add_rolling_average(
 # =========================================================
 # SUMMARY
 # =========================================================
+PAGES = [
+    "Summary",
+    "Event Progression",
+    "Personal Bests",
+    "Seasonal Bests",
+    "Top Ranked",
+    "Relative Improvement",
+    "Volatility",
+    "YOY",
+    "Seasonal Trend",
+    "Rolling Average",
+    "Average Performance",
+]
 
-st.header("Dataset Summary")
+# navigation (store index in session_state to persist across reruns)
+if "page_idx" not in st.session_state:
+    st.session_state["page_idx"] = 0
 
-c1, c2, c3 = st.columns(3)
-
-c1.metric(
-    "Athletes",
-    filtered_df["athlete_name"].nunique()
+selected_page = st.sidebar.radio(
+    "Navigate",
+    PAGES,
+    index=st.session_state["page_idx"],
 )
-
-c2.metric(
-    "Events",
-    filtered_df["event"].nunique()
-)
-
-c3.metric(
-    "Performances",
-    len(filtered_df)
-)
-
-# =========================================================
-# ORIGINAL EVENT PROGRESSION CHARTS
-# =========================================================
-
-st.markdown("---")
-
-st.header("Event Progression Charts")
-
-top_event_list = (
-    filtered_df["event"]
-    .value_counts()
-    .head(max_events)
-    .index
-    .tolist()
-)
-
-tabs = st.tabs(top_event_list)
-
-for tab, event in zip(tabs, top_event_list):
-
-    with tab:
-
-        subset = (
-            filtered_df[
-                filtered_df["event"] == event
-            ]
-            .copy()
-            .sort_values(
-                ["athlete_name", "year"]
-            )
-        )
-
-        if subset.empty:
-            st.info("No performances found.")
-            continue
-
-        st.subheader(f"{event}")
-
-        st.dataframe(
-            subset[
-                [
-                    "athlete_name",
-                    "year",
-                    "performance",
-                    "venue",
-                    "meeting",
-                    "date",
-                ]
-            ],
-            use_container_width=True
-        )
-
-        if subset["perf_numeric"].notna().any():
-
-            plot_subset = subset[
-                subset["perf_numeric"].notna()
-            ]
-
-            fig = px.line(
-                plot_subset,
-                x="year",
-                y="perf_numeric",
-                color="athlete_name",
-                markers=True,
-                hover_data=[
-                    "performance",
-                    "venue",
-                    "meeting",
-                    "date"
-                ],
-                template="plotly_dark",
-                title=f"{event} Career Progression"
-            )
-
-            fig.update_traces(
-                mode="lines+markers",
-                marker=dict(size=8),
-                line=dict(width=2)
-            )
-
-            fig.update_layout(
-                hovermode="closest",
-                legend_title_text="Athlete",
-                margin=dict(
-                    l=20,
-                    r=20,
-                    t=50,
-                    b=20
-                ),
-            )
-
-            if subset["is_track"].iloc[0]:
-
-                fig.update_yaxes(
-                    title="Seconds",
-                    autorange="reversed"
-                )
-
-            else:
-
-                fig.update_yaxes(
-                    title="Meters"
-                )
-
-            fig.update_xaxes(
-                title="Year",
-                tickmode="linear"
-            )
-
-            st.plotly_chart(
-                fig,
-                use_container_width=True
-            )
-
-        else:
-
-            st.warning(
-                "No numeric performances available."
-            )
+st.session_state["page_idx"] = PAGES.index(selected_page)
 
 
-# =========================================================
-# PERSONAL BESTS
-# =========================================================
+def render_summary(df):
+    st.header("Dataset Summary")
+    c1, c2, c3 = st.columns(3)
+    c1.metric("Athletes", df["athlete_name"].nunique())
+    c2.metric("Events", df["event"].nunique())
+    c3.metric("Performances", len(df))
 
-st.markdown("---")
 
-st.header("Personal Bests")
+def render_event_progression(df, max_events=20):
+    st.markdown("---")
+    st.header("Event Progression Charts")
 
-st.dataframe(
-    pb_df[
-        [
-            "athlete_name",
-            "event",
-            "performance",
-            "date",
-            "venue"
-        ]
-    ].sort_values(
-        ["event", "athlete_name"]
-    ),
-    use_container_width=True
-)
-
-# =========================================================
-# SEASONAL BESTS
-# =========================================================
-
-st.markdown("---")
-
-st.header("Seasonal Bests")
-
-st.dataframe(
-    sb_df[
-        [
-            "athlete_name",
-            "event",
-            "year",
-            "performance",
-            "date"
-        ]
-    ].sort_values(
-        ["event", "year"]
-    ),
-    use_container_width=True
-)
-
-# =========================================================
-# TOP RANKINGS
-# =========================================================
-
-st.markdown("---")
-
-st.header("Top Ranked Performances")
-
-st.dataframe(
-    top_ranked_df[
-        [
-            "event",
-            "athlete_name",
-            "performance",
-            "date",
-            "venue"
-        ]
-    ],
-    use_container_width=True
-)
-
-# =========================================================
-# IMPROVEMENT
-# =========================================================
-
-st.markdown("---")
-
-st.header("Relative Improvement")
-
-st.dataframe(
-    improvement_df.sort_values(
-        "improvement_pct",
-        ascending=False
-    ),
-    use_container_width=True
-)
-
-# =========================================================
-# VOLATILITY
-# =========================================================
-
-st.markdown("---")
-
-st.header("Performance Volatility")
-
-st.dataframe(
-    volatility_df.sort_values(
-        "volatility"
-    ),
-    use_container_width=True
-)
-
-# =========================================================
-# YOY CHANGES
-# =========================================================
-
-st.markdown("---")
-
-st.header("Year-over-Year Change")
-
-st.dataframe(
-    yoy_df[
-        [
-            "athlete_name",
-            "event",
-            "year",
-            "performance",
-            "change"
-        ]
-    ],
-    use_container_width=True
-)
-
-# =========================================================
-# EVENT TREND CHARTS
-# =========================================================
-
-st.markdown("---")
-
-st.header("Seasonal Best Progression")
-
-event_choice = st.selectbox(
-    "Select event",
-    sorted(
-        sb_df["event"]
-        .unique()
+    top_event_list = (
+        df["event"]
+        .value_counts()
+        .head(max_events)
+        .index
         .tolist()
     )
-)
 
-trend_df = sb_df[
-    sb_df["event"] == event_choice
-]
+    if not top_event_list:
+        st.info("No events to show.")
+        return
 
-fig = px.line(
-    trend_df,
-    x="year",
-    y="perf_numeric",
-    color="athlete_name",
-    markers=True,
-    hover_data=[
-        "performance",
-        "venue",
-        "date"
-    ],
-    template="plotly_dark",
-    title=f"{event_choice} Seasonal Bests"
-)
+    tabs = st.tabs(top_event_list)
 
-if trend_df["is_track"].iloc[0]:
+    for tab, event in zip(tabs, top_event_list):
 
-    fig.update_yaxes(
-        autorange="reversed"
+        with tab:
+
+            subset = (
+                df[df["event"] == event]
+                .copy()
+                .sort_values(["athlete_name", "year"])
+            )
+
+            if subset.empty:
+                st.info("No performances found.")
+                continue
+
+            st.subheader(f"{event}")
+
+            st.dataframe(
+                subset[
+                    [
+                        "athlete_name",
+                        "year",
+                        "performance",
+                        "venue",
+                        "meeting",
+                        "date",
+                    ]
+                ],
+                use_container_width=True,
+            )
+
+            if subset["perf_numeric"].notna().any():
+
+                plot_subset = subset[subset["perf_numeric"].notna()]
+
+                fig = px.line(
+                    plot_subset,
+                    x="year",
+                    y="perf_numeric",
+                    color="athlete_name",
+                    markers=True,
+                    hover_data=["performance", "venue", "meeting", "date"],
+                    template="plotly_dark",
+                    title=f"{event} Career Progression",
+                )
+
+                fig.update_traces(mode="lines+markers", marker=dict(size=8), line=dict(width=2))
+
+                fig.update_layout(
+                    hovermode="closest",
+                    legend_title_text="Athlete",
+                    margin=dict(l=20, r=20, t=50, b=20),
+                )
+
+                if subset["is_track"].iloc[0]:
+                    fig.update_yaxes(title="Seconds", autorange="reversed")
+                else:
+                    fig.update_yaxes(title="Meters")
+
+                fig.update_xaxes(title="Year", tickmode="linear")
+
+                st.plotly_chart(fig, use_container_width=True)
+
+            else:
+                st.warning("No numeric performances available.")
+
+
+def render_personal_bests(pb_df):
+    st.markdown("---")
+    st.header("Personal Bests")
+    st.dataframe(
+        pb_df[["athlete_name", "event", "performance", "date", "venue"]]
+        .sort_values(["event", "athlete_name"]),
+        use_container_width=True,
     )
 
-st.plotly_chart(
-    fig,
-    use_container_width=True
-)
 
-# =========================================================
-# ROLLING AVERAGE
-# =========================================================
-
-st.markdown("---")
-
-st.header("Rolling Average Trends")
-
-rolling_event_df = rolling_df[
-    rolling_df["event"] == event_choice
-]
-
-fig2 = px.line(
-    rolling_event_df,
-    x="year",
-    y="rolling_avg",
-    color="athlete_name",
-    markers=True,
-    template="plotly_dark",
-    title=f"{event_choice} Rolling Average"
-)
-
-if rolling_event_df["is_track"].iloc[0]:
-
-    fig2.update_yaxes(
-        autorange="reversed"
+def render_seasonal_bests(sb_df):
+    st.markdown("---")
+    st.header("Seasonal Bests")
+    st.dataframe(
+        sb_df[["athlete_name", "event", "year", "performance", "date"]]
+        .sort_values(["event", "year"]),
+        use_container_width=True,
     )
 
-st.plotly_chart(
-    fig2,
-    use_container_width=True
-)
 
-# =========================================================
-# AVERAGE PERFORMANCE
-# =========================================================
+def render_top_ranked(top_ranked_df):
+    st.markdown("---")
+    st.header("Top Ranked Performances")
+    st.dataframe(
+        top_ranked_df[["event", "athlete_name", "performance", "date", "venue"]],
+        use_container_width=True,
+    )
 
-st.markdown("---")
 
-st.header("Average Performance")
+def render_relative_improvement(improvement_df):
+    st.markdown("---")
+    st.header("Relative Improvement")
+    st.dataframe(improvement_df.sort_values("improvement_pct", ascending=False), use_container_width=True)
 
-st.dataframe(
-    avg_df.sort_values(
-        ["event", "average_perf"]
-    ),
-    use_container_width=True
-)
+
+def render_volatility(volatility_df):
+    st.markdown("---")
+    st.header("Performance Volatility")
+    st.dataframe(volatility_df.sort_values("volatility"), use_container_width=True)
+
+
+def render_yoy_changes(yoy_df):
+    st.markdown("---")
+    st.header("Year-over-Year Change")
+    st.dataframe(
+        yoy_df[["athlete_name", "event", "year", "performance", "change"]], use_container_width=True
+    )
+
+
+def render_seasonal_trend(sb_df):
+    st.markdown("---")
+    st.header("Seasonal Best Progression")
+
+    events = sorted(sb_df["event"].unique().tolist())
+    if not events:
+        st.info("No seasonal bests available.")
+        return
+
+    event_choice = st.selectbox("Select event", events)
+
+    trend_df = sb_df[sb_df["event"] == event_choice]
+
+    fig = px.line(
+        trend_df,
+        x="year",
+        y="perf_numeric",
+        color="athlete_name",
+        markers=True,
+        hover_data=["performance", "venue", "date"],
+        template="plotly_dark",
+        title=f"{event_choice} Seasonal Bests",
+    )
+
+    if not trend_df.empty and trend_df["is_track"].iloc[0]:
+        fig.update_yaxes(autorange="reversed")
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def render_rolling_average(rolling_df):
+    st.markdown("---")
+    st.header("Rolling Average Trends")
+
+    events = sorted(rolling_df["event"].unique().tolist())
+    if not events:
+        st.info("No rolling averages available.")
+        return
+
+    event_choice = st.selectbox("Select event for rolling average", events, key="rolling_event_choice")
+
+    rolling_event_df = rolling_df[rolling_df["event"] == event_choice]
+
+    fig2 = px.line(
+        rolling_event_df,
+        x="year",
+        y="rolling_avg",
+        color="athlete_name",
+        markers=True,
+        template="plotly_dark",
+        title=f"{event_choice} Rolling Average",
+    )
+
+    if not rolling_event_df.empty and rolling_event_df["is_track"].iloc[0]:
+        fig2.update_yaxes(autorange="reversed")
+
+    st.plotly_chart(fig2, use_container_width=True)
+
+
+def render_average_performance(avg_df):
+    st.markdown("---")
+    st.header("Average Performance")
+    st.dataframe(avg_df.sort_values(["event", "average_perf"]), use_container_width=True)
+
+
+# call the renderer for the selected page
+if selected_page == "Summary":
+    render_summary(filtered_df)
+elif selected_page == "Event Progression":
+    render_event_progression(filtered_df, max_events=max_events)
+elif selected_page == "Personal Bests":
+    render_personal_bests(pb_df)
+elif selected_page == "Seasonal Bests":
+    render_seasonal_bests(sb_df)
+elif selected_page == "Top Ranked":
+    render_top_ranked(top_ranked_df)
+elif selected_page == "Relative Improvement":
+    render_relative_improvement(improvement_df)
+elif selected_page == "Volatility":
+    render_volatility(volatility_df)
+elif selected_page == "YOY":
+    render_yoy_changes(yoy_df)
+elif selected_page == "Seasonal Trend":
+    render_seasonal_trend(sb_df)
+elif selected_page == "Rolling Average":
+    render_rolling_average(rolling_df)
+elif selected_page == "Average Performance":
+    render_average_performance(avg_df)
