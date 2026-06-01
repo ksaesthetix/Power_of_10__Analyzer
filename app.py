@@ -55,7 +55,7 @@ if "page_idx" not in st.session_state:
 selected_page = option_menu(
     menu_title=None,
     options=PAGES,
-    icons=["speedometer2"] + ["bar-chart"] * 10,
+    #icons=["speedometer2"] + ["bar-chart"] * 10,
     menu_icon="cast",
     default_index=st.session_state["page_idx"],
     orientation="horizontal",
