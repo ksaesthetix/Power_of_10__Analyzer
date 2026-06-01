@@ -3,7 +3,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from streamlit_option_menu import option_menu
 
 from po10_scraper import (
     build_dataframe
@@ -31,6 +30,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+st.title("Power of 10 Analyzer")
+
+st.markdown(
+    """
+    Analyze athlete progression,
+    seasonal bests,
+    personal bests,
+    rankings,
+    and performance trends.
+    """
+)
+
 # =========================================================
 # NAVIGATION BAR
 # =========================================================
@@ -52,27 +63,60 @@ PAGES = [
 if "page_idx" not in st.session_state:
     st.session_state["page_idx"] = 0
 
-selected_page = option_menu(
-    menu_title=None,
-    options=PAGES,
-    #icons=["speedometer2"] + ["bar-chart"] * 10,
-    #menu_icon="cast",
-    default_index=st.session_state["page_idx"],
-    orientation="horizontal",
-)
-st.session_state["page_idx"] = PAGES.index(selected_page)
+# Custom CSS for navigation bar
+st.markdown("""
+<style>
+.nav-container {
+    display: flex;
+    gap: 8px;
+    margin: 20px 0;
+    padding: 12px;
+    background-color: #f0f2f6;
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+.nav-item {
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+.nav-item:hover {
+    background-color: #e0e5f1;
+    border-color: #1f77b4;
+}
+.nav-item.active {
+    background-color: #ff6b6b;
+    color: white;
+    border-color: #ff6b6b;
+}
+</style>
+""", unsafe_allow_html=True)
 
-st.title("Power of 10 Analyzer")
+# Create navigation bar using columns
+cols = st.columns(len(PAGES))
+selected_page = None
 
-st.markdown(
-    """
-    Analyze athlete progression,
-    seasonal bests,
-    personal bests,
-    rankings,
-    and performance trends.
-    """
-)
+for idx, (col, page) in enumerate(zip(cols, PAGES)):
+    with col:
+        if st.button(
+            page,
+            key=f"nav_{idx}",
+            use_container_width=True,
+            help=f"Go to {page}"
+        ):
+            st.session_state["page_idx"] = idx
+            selected_page = page
+
+# Get selected page from session state
+if selected_page is None:
+    selected_page = PAGES[st.session_state["page_idx"]]
+
+st.markdown("---")
 
 # =========================================================
 # SIDEBAR
