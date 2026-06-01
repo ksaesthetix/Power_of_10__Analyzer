@@ -3,6 +3,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from streamlit_option_menu import option_menu
 
 from po10_scraper import (
     build_dataframe
@@ -29,6 +30,37 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# =========================================================
+# NAVIGATION BAR
+# =========================================================
+
+PAGES = [
+    "Summary",
+    "Event Progression",
+    "Personal Bests",
+    "Seasonal Bests",
+    "Top Ranked",
+    "Relative Improvement",
+    "Volatility",
+    "YOY",
+    "Seasonal Trend",
+    "Rolling Average",
+    "Average Performance",
+]
+
+if "page_idx" not in st.session_state:
+    st.session_state["page_idx"] = 0
+
+selected_page = option_menu(
+    menu_title=None,
+    options=PAGES,
+    icons=["speedometer2"] + ["bar-chart"] * 10,
+    menu_icon="cast",
+    default_index=st.session_state["page_idx"],
+    orientation="horizontal",
+)
+st.session_state["page_idx"] = PAGES.index(selected_page)
 
 st.title("Power of 10 Analyzer")
 
@@ -245,36 +277,12 @@ rolling_df = add_rolling_average(
 )
 
 # =========================================================
-# SUMMARY
+# RENDER FUNCTIONS
 # =========================================================
-PAGES = [
-    "Summary",
-    "Event Progression",
-    "Personal Bests",
-    "Seasonal Bests",
-    "Top Ranked",
-    "Relative Improvement",
-    "Volatility",
-    "YOY",
-    "Seasonal Trend",
-    "Rolling Average",
-    "Average Performance",
-]
-
-# navigation (store index in session_state to persist across reruns)
-if "page_idx" not in st.session_state:
-    st.session_state["page_idx"] = 0
-
-selected_page = st.sidebar.radio(
-    "Navigate",
-    PAGES,
-    index=st.session_state["page_idx"],
-)
-st.session_state["page_idx"] = PAGES.index(selected_page)
 
 
 def render_summary(df):
-    st.header("Dataset Summary")
+    st.header("📊 Dataset Summary")
     c1, c2, c3 = st.columns(3)
     c1.metric("Athletes", df["athlete_name"].nunique())
     c2.metric("Events", df["event"].nunique())
@@ -282,8 +290,7 @@ def render_summary(df):
 
 
 def render_event_progression(df, max_events=20):
-    st.markdown("---")
-    st.header("Event Progression Charts")
+    st.header("📈 Event Progression Charts")
 
     top_event_list = (
         df["event"]
@@ -366,8 +373,7 @@ def render_event_progression(df, max_events=20):
 
 
 def render_personal_bests(pb_df):
-    st.markdown("---")
-    st.header("Personal Bests")
+    st.header("🥇 Personal Bests")
     st.dataframe(
         pb_df[["athlete_name", "event", "performance", "date", "venue"]]
         .sort_values(["event", "athlete_name"]),
@@ -376,8 +382,7 @@ def render_personal_bests(pb_df):
 
 
 def render_seasonal_bests(sb_df):
-    st.markdown("---")
-    st.header("Seasonal Bests")
+    st.header("🎯 Seasonal Bests")
     st.dataframe(
         sb_df[["athlete_name", "event", "year", "performance", "date"]]
         .sort_values(["event", "year"]),
@@ -386,8 +391,7 @@ def render_seasonal_bests(sb_df):
 
 
 def render_top_ranked(top_ranked_df):
-    st.markdown("---")
-    st.header("Top Ranked Performances")
+    st.header("⭐ Top Ranked Performances")
     st.dataframe(
         top_ranked_df[["event", "athlete_name", "performance", "date", "venue"]],
         use_container_width=True,
@@ -395,28 +399,24 @@ def render_top_ranked(top_ranked_df):
 
 
 def render_relative_improvement(improvement_df):
-    st.markdown("---")
-    st.header("Relative Improvement")
+    st.header("📈 Relative Improvement")
     st.dataframe(improvement_df.sort_values("improvement_pct", ascending=False), use_container_width=True)
 
 
 def render_volatility(volatility_df):
-    st.markdown("---")
-    st.header("Performance Volatility")
+    st.header("📊 Performance Volatility")
     st.dataframe(volatility_df.sort_values("volatility"), use_container_width=True)
 
 
 def render_yoy_changes(yoy_df):
-    st.markdown("---")
-    st.header("Year-over-Year Change")
+    st.header("📅 Year-over-Year Change")
     st.dataframe(
         yoy_df[["athlete_name", "event", "year", "performance", "change"]], use_container_width=True
     )
 
 
 def render_seasonal_trend(sb_df):
-    st.markdown("---")
-    st.header("Seasonal Best Progression")
+    st.header("📊 Seasonal Best Progression")
 
     events = sorted(sb_df["event"].unique().tolist())
     if not events:
@@ -445,8 +445,7 @@ def render_seasonal_trend(sb_df):
 
 
 def render_rolling_average(rolling_df):
-    st.markdown("---")
-    st.header("Rolling Average Trends")
+    st.header("📉 Rolling Average Trends")
 
     events = sorted(rolling_df["event"].unique().tolist())
     if not events:
@@ -474,8 +473,7 @@ def render_rolling_average(rolling_df):
 
 
 def render_average_performance(avg_df):
-    st.markdown("---")
-    st.header("Average Performance")
+    st.header("📊 Average Performance")
     st.dataframe(avg_df.sort_values(["event", "average_perf"]), use_container_width=True)
 
 
