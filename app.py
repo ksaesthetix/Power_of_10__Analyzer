@@ -195,7 +195,7 @@ analytics_df = prepare_analytics_df(df)
 # FILTERS HELPER
 # =========================================================
 
-def get_page_filters(df):
+def get_page_filters(df, page_name=""):
     """Create filter UI and return selected filters."""
     col1, col2, col3 = st.columns(3)
     
@@ -204,11 +204,11 @@ def get_page_filters(df):
     years = sorted(df["year"].dropna().unique().tolist())
     
     with col1:
-        selected_athletes = st.multiselect("Athletes", athletes, key=f"athlete_{id(df)}")
+        selected_athletes = st.multiselect("Athletes", athletes, key=f"athlete_{page_name}")
     with col2:
-        selected_events = st.multiselect("Events", events, key=f"event_{id(df)}")
+        selected_events = st.multiselect("Events", events, key=f"event_{page_name}")
     with col3:
-        selected_years = st.multiselect("Years", years, default=years[-3:] if years else [], key=f"year_{id(df)}")
+        selected_years = st.multiselect("Years", years, default=years[-3:] if years else [], key=f"year_{page_name}")
     
     return selected_athletes, selected_events, selected_years
 
@@ -232,7 +232,7 @@ def apply_filters(df, athletes, events, years):
 
 def render_summary(df):
     st.header("📊 Dataset Summary")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Summary")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     c1, c2, c3 = st.columns(3)
@@ -243,7 +243,7 @@ def render_summary(df):
 
 def render_performance_trends(df, max_events=20):
     st.header("📈 Performance Trends")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Performance Trends")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     sb_df = get_season_bests(filtered_df)
@@ -338,7 +338,7 @@ def render_performance_trends(df, max_events=20):
 
 def render_event_summary(df):
     st.header("📋 Event Summary Statistics")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Event Summary")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     summary_df = get_event_summary_stats(filtered_df)
@@ -366,7 +366,7 @@ def render_event_summary(df):
 
 def render_top_athletes_by_year(df):
     st.header("🏅 Top Athletes by Year")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Top Athletes by Year")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     available_years = sorted(
@@ -421,7 +421,7 @@ def render_top_athletes_by_year(df):
 
 def render_distribution(df):
     st.header("📊 Performance Distribution by Event")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Distribution")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     dist_df = get_performance_distribution(filtered_df)
@@ -456,7 +456,7 @@ def render_distribution(df):
 
 def render_performance_vs_age(df):
     st.header("👟 Performance vs Age")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Performance vs Age")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     age_df = get_performance_vs_age(filtered_df)
@@ -489,7 +489,7 @@ def render_performance_vs_age(df):
 
 def render_trend_momentum(df):
     st.header("📈 Trend Slope / Momentum Metrics")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Trend Momentum")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     trend_df = get_trend_slopes(filtered_df)
@@ -518,7 +518,7 @@ def render_trend_momentum(df):
 
 def render_personal_bests(df):
     st.header("🥇 Personal Bests")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Personal Bests")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     pb_df = get_personal_bests(filtered_df)
@@ -532,7 +532,7 @@ def render_personal_bests(df):
 
 def render_seasonal_bests(df):
     st.header("🎯 Seasonal Bests")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Seasonal Bests")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     sb_df = get_season_bests(filtered_df)
@@ -546,7 +546,7 @@ def render_seasonal_bests(df):
 
 def render_top_ranked(df):
     st.header("⭐ Top Ranked Performances")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Top Ranked")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     top_ranked_df = get_top_ranked_performances(filtered_df, top_n=10)
@@ -559,7 +559,7 @@ def render_top_ranked(df):
 
 def render_relative_improvement(df):
     st.header("📈 Relative Improvement")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Relative Improvement")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     improvement_df = get_relative_improvement(filtered_df)
@@ -569,7 +569,7 @@ def render_relative_improvement(df):
 
 def render_volatility(df):
     st.header("📊 Performance Volatility")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "Volatility")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     volatility_df = get_performance_volatility(filtered_df)
@@ -579,7 +579,7 @@ def render_volatility(df):
 
 def render_yoy_changes(df):
     st.header("📅 Year-over-Year Change")
-    athletes_list, events_list, years_list = get_page_filters(df)
+    athletes_list, events_list, years_list = get_page_filters(df, "YOY")
     filtered_df = apply_filters(df, athletes_list, events_list, years_list)
     
     sb_df = get_season_bests(filtered_df)
