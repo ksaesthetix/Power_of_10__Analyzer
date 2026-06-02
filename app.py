@@ -82,8 +82,8 @@ with st.sidebar:
         default_index=st.session_state.get("page_idx", 0),
         orientation="vertical",
         styles={
-            "container": {"padding": "0!important", "background-color": "#f8f9fa"},
-            "nav-link": {"font-size": "16px", "text-align": "left", "margin": "0px", "padding": "10px 14px"},
+            "container": {"padding": "0!important", "background-color": "#221F1F"},
+            "nav-link": {"font-size": "16px", "text-align": "left", "color": "#706F6F", "margin": "0px", "padding": "10px 14px"},
             "nav-link-selected": {"background-color": "#ff6b6b", "color": "white"},
         },
     )
