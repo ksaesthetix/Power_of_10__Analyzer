@@ -53,7 +53,7 @@ st.markdown(
 
 PAGES = [
     "Summary",
-    "Event Progression",
+    "Performance Trends",
     "Event Summary",
     "Top Athletes by Year",
     "Distribution",
@@ -65,9 +65,6 @@ PAGES = [
     "Relative Improvement",
     "Volatility",
     "YOY",
-    "Seasonal Trend",
-    "Rolling Average",
-    "Average Performance",
 ]
 
 if "page_idx" not in st.session_state:
@@ -340,11 +337,6 @@ top_ranked_df = get_top_ranked_performances(
     top_n=10
 )
 
-rolling_df = add_rolling_average(
-    filtered_df,
-    window=3
-)
-
 summary_df = get_event_summary_stats(filtered_df)
 
 top_year_df = (
@@ -374,11 +366,19 @@ def render_summary(df):
     c3.metric("Performances", len(df))
 
 
-def render_event_progression(df, max_events=20):
-    st.header("📈 Event Progression Charts")
+def render_performance_trends(df, sb_df, max_events=20):
+    st.header("📈 Performance Trends")
+
+    trend_mode = st.radio(
+        "View",
+        ["All Performances", "Seasonal Bests"],
+        horizontal=True,
+    )
+
+    display_df = sb_df if trend_mode == "Seasonal Bests" else df
 
     top_event_list = (
-        df["event"]
+        display_df["event"]
         .value_counts()
         .head(max_events)
         .index
@@ -396,7 +396,7 @@ def render_event_progression(df, max_events=20):
         with tab:
 
             subset = (
-                df[df["event"] == event]
+                display_df[display_df["event"] == event]
                 .copy()
                 .sort_values(["athlete_name", "year"])
             )
@@ -433,7 +433,7 @@ def render_event_progression(df, max_events=20):
                     markers=True,
                     hover_data=["performance", "venue", "meeting", "date"],
                     template="plotly_dark",
-                    title=f"{event} Career Progression",
+                    title=f"{event} {trend_mode}",
                 )
 
                 fig.update_traces(mode="lines+markers", marker=dict(size=8), line=dict(width=2))
@@ -634,73 +634,14 @@ def render_yoy_changes(yoy_df):
     )
 
 
-def render_seasonal_trend(sb_df):
-    st.header("📊 Seasonal Best Progression")
 
-    events = sorted(sb_df["event"].unique().tolist())
-    if not events:
-        st.info("No seasonal bests available.")
-        return
-
-    event_choice = st.selectbox("Select event", events)
-
-    trend_df = sb_df[sb_df["event"] == event_choice]
-
-    fig = px.line(
-        trend_df,
-        x="year",
-        y="perf_numeric",
-        color="athlete_name",
-        markers=True,
-        hover_data=["performance", "venue", "date"],
-        template="plotly_dark",
-        title=f"{event_choice} Seasonal Bests",
-    )
-
-    if not trend_df.empty and trend_df["is_track"].iloc[0]:
-        fig.update_yaxes(autorange="reversed")
-
-    st.plotly_chart(fig, use_container_width=True)
-
-
-def render_rolling_average(rolling_df):
-    st.header("📉 Rolling Average Trends")
-
-    events = sorted(rolling_df["event"].unique().tolist())
-    if not events:
-        st.info("No rolling averages available.")
-        return
-
-    event_choice = st.selectbox("Select event for rolling average", events, key="rolling_event_choice")
-
-    rolling_event_df = rolling_df[rolling_df["event"] == event_choice]
-
-    fig2 = px.line(
-        rolling_event_df,
-        x="year",
-        y="rolling_avg",
-        color="athlete_name",
-        markers=True,
-        template="plotly_dark",
-        title=f"{event_choice} Rolling Average",
-    )
-
-    if not rolling_event_df.empty and rolling_event_df["is_track"].iloc[0]:
-        fig2.update_yaxes(autorange="reversed")
-
-    st.plotly_chart(fig2, use_container_width=True)
-
-
-def render_average_performance(avg_df):
-    st.header("📊 Average Performance")
-    st.dataframe(avg_df.sort_values(["event", "average_perf"]), use_container_width=True)
 
 
 # call the renderer for the selected page
 if selected_page == "Summary":
     render_summary(filtered_df)
-elif selected_page == "Event Progression":
-    render_event_progression(filtered_df, max_events=max_events)
+elif selected_page == "Performance Trends":
+    render_performance_trends(filtered_df, sb_df, max_events=max_events)
 elif selected_page == "Event Summary":
     render_event_summary(summary_df)
 elif selected_page == "Top Athletes by Year":
@@ -723,9 +664,3 @@ elif selected_page == "Volatility":
     render_volatility(volatility_df)
 elif selected_page == "YOY":
     render_yoy_changes(yoy_df)
-elif selected_page == "Seasonal Trend":
-    render_seasonal_trend(sb_df)
-elif selected_page == "Rolling Average":
-    render_rolling_average(rolling_df)
-elif selected_page == "Average Performance":
-    render_average_performance(avg_df)
