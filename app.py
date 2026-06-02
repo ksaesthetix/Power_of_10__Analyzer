@@ -403,20 +403,20 @@ def render_top_athletes_by_year(df):
         use_container_width=True,
     )
 
-    fig = px.bar(
-        top_year_df,
-        x="perf_numeric",
-        y="event",
-        color="athlete_name",
-        orientation="h",
-        title=f"Best Event Performances in {selected_year}",
-        template="plotly_dark",
-    )
-    if top_year_df["is_track"].iloc[0]:
-        fig.update_xaxes(autorange="reversed")
+    #fig = px.bar(
+    #    top_year_df,
+    #    x="perf_numeric",
+    #    y="event",
+    #    color="athlete_name",
+    #    orientation="h",
+    #    title=f"Best Event Performances in {selected_year}",
+    #    template="plotly_dark",
+    #)
+    #if top_year_df["is_track"].iloc[0]:
+    #    fig.update_xaxes(autorange="reversed")
 
-    fig.update_layout(margin=dict(l=20, r=20, t=50, b=20))
-    st.plotly_chart(fig, use_container_width=True)
+    #fig.update_layout(margin=dict(l=20, r=20, t=50, b=20))
+    #st.plotly_chart(fig, use_container_width=True)
 
 
 def render_distribution(df):
