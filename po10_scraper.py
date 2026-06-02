@@ -41,6 +41,7 @@ class Performance:
     year: str = ""
     age_group: str = ""
     was_pb: bool = False
+    dob: str = ""
 
 
 def clean(text: str) -> str:
@@ -76,7 +77,7 @@ def get_athlete_ids_from_coach(coach_id: str, session: requests.Session) -> list
     return results
 
 
-def parse_griddata_json(soup: BeautifulSoup, athlete_id: str, athlete_name: str) -> list[Performance]:
+def parse_griddata_json(soup: BeautifulSoup, athlete_id: str, athlete_name: str, dob: str = "") -> list[Performance]:
     perfs: list[Performance] = []
     for script in soup.find_all("script"):
         text = script.string or ""
@@ -115,13 +116,14 @@ def parse_griddata_json(soup: BeautifulSoup, athlete_id: str, athlete_name: str)
                         year=year,
                         age_group=row.get("ag", ""),
                         was_pb=bool(row.get("waspb", False)),
+                        dob=dob,
                     ))
         break
 
     return perfs
 
 
-def parse_career_js_arrays(soup: BeautifulSoup, athlete_id: str, athlete_name: str) -> list[Performance]:
+def parse_career_js_arrays(soup: BeautifulSoup, athlete_id: str, athlete_name: str, dob: str = "") -> list[Performance]:
     perfs: list[Performance] = []
     all_scripts = " ".join(script.string or "" for script in soup.find_all("script"))
     indices = re.findall(r'evntKeys\.set\((\d+),', all_scripts)
@@ -214,6 +216,7 @@ def parse_career_js_arrays(soup: BeautifulSoup, athlete_id: str, athlete_name: s
                 year=year,
                 age_group=age_grps[i] if i < len(age_grps) else "",
                 was_pb=False,
+                dob=dob,
             ))
 
     return perfs
@@ -233,9 +236,21 @@ def scrape_athlete_performances(
     if not athlete_name:
         athlete_name = clean(athlete_id)
 
+    # extract DOB from athlete page if present
+    dob = ""
+    dob_div = soup.find("div", class_=re.compile(r"\bdob\b", re.I))
+    if dob_div:
+        strong = dob_div.find("strong")
+        if strong:
+            dob_text = clean(strong.get_text())
+            # dob_text may look like '18 November 2000 (25 YRS)'
+            m = re.search(r"([0-9]{1,2}\s+\w+\s+[0-9]{4})", dob_text)
+            if m:
+                dob = m.group(1)
+
     if scope == "career":
-        return parse_career_js_arrays(soup, athlete_id, athlete_name)
-    return parse_griddata_json(soup, athlete_id, athlete_name)
+        return parse_career_js_arrays(soup, athlete_id, athlete_name, dob=dob)
+    return parse_griddata_json(soup, athlete_id, athlete_name, dob=dob)
 
 
 def build_dataframe(
@@ -278,6 +293,7 @@ def build_dataframe(
             "year": p.year,
             "age_group": p.age_group,
             "was_pb": p.was_pb,
+            "dob": p.dob,
         }
         for p in all_performances
     ])

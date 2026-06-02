@@ -2,6 +2,7 @@
 
 import re
 import pandas as pd
+from datetime import datetime
 from po10_scraper import infer_event_kind, parse_perf_numeric
 
 
@@ -41,6 +42,39 @@ def prepare_analytics_df(df: pd.DataFrame) -> pd.DataFrame:
     analytics_df = analytics_df.dropna(subset=["year"])
 
     analytics_df["year"] = analytics_df["year"].astype(int)
+
+    # parse DOB if available and compute age at performance
+    if "dob" in analytics_df.columns:
+        # try to parse DOB - many pages use formats like '18 November 2000'
+        analytics_df["dob_parsed"] = pd.to_datetime(
+            analytics_df["dob"], dayfirst=True, errors="coerce"
+        )
+
+        # parse performance date where available
+        analytics_df["perf_date_parsed"] = pd.to_datetime(
+            analytics_df["date"], dayfirst=True, errors="coerce"
+        )
+
+        # fallback: where perf_date_parsed is NaT, set to Jan 1 of the performance year
+        missing_perf_dates = analytics_df["perf_date_parsed"].isna()
+        if missing_perf_dates.any():
+            analytics_df.loc[missing_perf_dates, "perf_date_parsed"] = pd.to_datetime(
+                analytics_df.loc[missing_perf_dates, "year"].astype(str) + "-01-01"
+            )
+
+        # compute age in years (floor)
+        def compute_age(row):
+            dob = row.get("dob_parsed")
+            perf = row.get("perf_date_parsed")
+            if pd.isna(dob) or pd.isna(perf):
+                return None
+            # compute full years difference, adjusting for month/day
+            years = perf.year - dob.year
+            if (perf.month, perf.day) < (dob.month, dob.day):
+                years -= 1
+            return int(years)
+
+        analytics_df["age"] = analytics_df.apply(compute_age, axis=1)
 
     return analytics_df
 
@@ -199,7 +233,10 @@ def _extract_age(age_group: str):
 def get_performance_vs_age(df: pd.DataFrame) -> pd.DataFrame:
 
     df = df.copy()
-    df["age"] = df["age_group"].apply(_extract_age)
+    # prefer computed age (from DOB) when available; otherwise fall back to age_group
+    if "age" not in df.columns or df["age"].isna().all():
+        df["age"] = df["age_group"].apply(_extract_age)
+
     return df[df["age"].notna() & df["perf_numeric"].notna()].copy()
 
 
