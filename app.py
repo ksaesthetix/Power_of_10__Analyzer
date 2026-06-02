@@ -289,21 +289,6 @@ if selected_years:
         .isin(selected_years)
     ]
 
-available_years = sorted(
-    filtered_df["year"]
-    .dropna()
-    .unique()
-    .tolist()
-)
-
-selected_top_year = None
-if available_years:
-    selected_top_year = st.sidebar.selectbox(
-        "Top athletes year",
-        available_years,
-        index=len(available_years) - 1,
-    )
-
 # =========================================================
 # FILTERED ANALYTICS TABLES
 # =========================================================
@@ -339,13 +324,7 @@ top_ranked_df = get_top_ranked_performances(
 
 summary_df = get_event_summary_stats(filtered_df)
 
-top_year_df = (
-    get_top_athletes_by_year(
-        filtered_df,
-        selected_top_year,
-        top_n=50,
-    ) if selected_top_year is not None else pd.DataFrame()
-)
+
 
 dist_df = get_performance_distribution(filtered_df)
 
@@ -480,8 +459,32 @@ def render_event_summary(summary_df):
     st.plotly_chart(fig, use_container_width=True)
 
 
-def render_top_athletes_by_year(top_year_df, year):
-    st.header(f"🏅 Top Athletes in {year}")
+def render_top_athletes_by_year(df):
+    st.header("🏅 Top Athletes by Year")
+    
+    available_years = sorted(
+        df["year"]
+        .dropna()
+        .unique()
+        .tolist()
+    )
+    
+    if not available_years:
+        st.info("No year data available.")
+        return
+    
+    selected_year = st.selectbox(
+        "Select year",
+        available_years,
+        index=len(available_years) - 1,
+    )
+    
+    top_year_df = get_top_athletes_by_year(
+        df,
+        selected_year,
+        top_n=50,
+    )
+    
     if top_year_df.empty:
         st.info("No results for this year.")
         return
@@ -499,7 +502,7 @@ def render_top_athletes_by_year(top_year_df, year):
         y="event",
         color="athlete_name",
         orientation="h",
-        title=f"Best Event Performances in {year}",
+        title=f"Best Event Performances in {selected_year}",
         template="plotly_dark",
     )
     if top_year_df["is_track"].iloc[0]:
@@ -645,7 +648,7 @@ elif selected_page == "Performance Trends":
 elif selected_page == "Event Summary":
     render_event_summary(summary_df)
 elif selected_page == "Top Athletes by Year":
-    render_top_athletes_by_year(top_year_df, selected_top_year)
+    render_top_athletes_by_year(filtered_df)
 elif selected_page == "Distribution":
     render_distribution(dist_df)
 elif selected_page == "Performance vs Age":
