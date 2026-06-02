@@ -3,6 +3,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from streamlit_option_menu import option_menu
 
 from po10_scraper import (
     build_dataframe
@@ -75,12 +76,16 @@ EXCLUDED_ATHLETES = {
 
 with st.sidebar:
 
-    st.header("Navigation")
-    selected_page = st.radio(
-        "Select page",
+    selected_page = option_menu(
+        "Navigation",
         PAGES,
-        index=st.session_state.get("page_idx", 0),
-        key="selected_page",
+        default_index=st.session_state.get("page_idx", 0),
+        orientation="vertical",
+        styles={
+            "container": {"padding": "0!important", "background-color": "#f8f9fa"},
+            "nav-link": {"font-size": "16px", "text-align": "left", "margin": "0px", "padding": "10px 14px"},
+            "nav-link-selected": {"background-color": "#ff6b6b", "color": "white"},
+        },
     )
     st.session_state["page_idx"] = PAGES.index(selected_page)
 
