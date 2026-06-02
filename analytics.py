@@ -1,5 +1,6 @@
 # analytics.py
 
+import re
 import pandas as pd
 from po10_scraper import infer_event_kind, parse_perf_numeric
 
@@ -120,6 +121,124 @@ def get_performance_volatility(df: pd.DataFrame) -> pd.DataFrame:
         .std()
         .reset_index(name="volatility")
     )
+
+
+# =========================================================
+# EVENT SUMMARY STATS
+# =========================================================
+
+def get_event_summary_stats(df: pd.DataFrame) -> pd.DataFrame:
+
+    return (
+        df[df["perf_numeric"].notna()]
+        .groupby("event")["perf_numeric"]
+        .agg(
+            event_count="count",
+            mean_perf="mean",
+            median_perf="median",
+            min_perf="min",
+            max_perf="max",
+            std_perf="std",
+        )
+        .reset_index()
+    )
+
+
+# =========================================================
+# TOP ATHLETES BY YEAR
+# =========================================================
+
+def get_top_athletes_by_year(
+    df: pd.DataFrame,
+    year: int,
+    top_n: int = 20,
+) -> pd.DataFrame:
+
+    year_df = df[df["year"] == year]
+    if year_df.empty:
+        return pd.DataFrame()
+
+    rows = []
+    for event, group in year_df.groupby("event"):
+        is_track = group["is_track"].iloc[0]
+        if is_track:
+            best_idx = group["perf_numeric"].idxmin()
+        else:
+            best_idx = group["perf_numeric"].idxmax()
+        rows.append(group.loc[best_idx])
+
+    top_df = pd.DataFrame(rows)
+    if top_df.empty:
+        return top_df
+
+    return top_df.sort_values(["event", "perf_numeric"], ascending=[True, True]).head(top_n)
+
+
+# =========================================================
+# PERFORMANCE DISTRIBUTION
+# =========================================================
+
+def get_performance_distribution(df: pd.DataFrame) -> pd.DataFrame:
+
+    return df[df["perf_numeric"].notna()].copy()
+
+
+# =========================================================
+# PERFORMANCE VS AGE
+# =========================================================
+
+def _extract_age(age_group: str):
+    if not age_group:
+        return None
+    match = re.search(r"(\d{1,2})", str(age_group))
+    if match:
+        return int(match.group(1))
+    return None
+
+
+def get_performance_vs_age(df: pd.DataFrame) -> pd.DataFrame:
+
+    df = df.copy()
+    df["age"] = df["age_group"].apply(_extract_age)
+    return df[df["age"].notna() & df["perf_numeric"].notna()].copy()
+
+
+# =========================================================
+# TREND SLOPE / MOMENTUM
+# =========================================================
+
+def _compute_trend_slope(years: pd.Series, values: pd.Series):
+    if len(years) < 2:
+        return None
+    cov = years.cov(values)
+    var = years.var()
+    if var == 0 or pd.isna(cov):
+        return None
+    return cov / var
+
+
+def get_trend_slopes(df: pd.DataFrame) -> pd.DataFrame:
+
+    rows = []
+    for (athlete, event), group in df.groupby(["athlete_name", "event"]):
+        valid = group.dropna(subset=["year", "perf_numeric"]).sort_values("year")
+        if len(valid) < 2:
+            continue
+        slope = _compute_trend_slope(valid["year"], valid["perf_numeric"])
+        if slope is None:
+            continue
+        is_track = valid["is_track"].iloc[0]
+        momentum = -slope if is_track else slope
+        rows.append({
+            "athlete_name": athlete,
+            "event": event,
+            "data_points": len(valid),
+            "slope": slope,
+            "momentum": momentum,
+            "improvement_direction": "improving" if momentum > 0 else "declining",
+        })
+
+    return pd.DataFrame(rows)
 
 
 # =========================================================

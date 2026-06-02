@@ -17,7 +17,12 @@ from analytics import (
     get_relative_improvement,
     get_yoy_changes,
     get_top_ranked_performances,
-    add_rolling_average
+    add_rolling_average,
+    get_event_summary_stats,
+    get_top_athletes_by_year,
+    get_performance_distribution,
+    get_performance_vs_age,
+    get_trend_slopes,
 )
 
 # =========================================================
@@ -49,6 +54,11 @@ st.markdown(
 PAGES = [
     "Summary",
     "Event Progression",
+    "Event Summary",
+    "Top Athletes by Year",
+    "Distribution",
+    "Performance vs Age",
+    "Trend Momentum",
     "Personal Bests",
     "Seasonal Bests",
     "Top Ranked",
@@ -282,6 +292,21 @@ if selected_years:
         .isin(selected_years)
     ]
 
+available_years = sorted(
+    filtered_df["year"]
+    .dropna()
+    .unique()
+    .tolist()
+)
+
+selected_top_year = None
+if available_years:
+    selected_top_year = st.sidebar.selectbox(
+        "Top athletes year",
+        available_years,
+        index=len(available_years) - 1,
+    )
+
 # =========================================================
 # FILTERED ANALYTICS TABLES
 # =========================================================
@@ -319,6 +344,22 @@ rolling_df = add_rolling_average(
     filtered_df,
     window=3
 )
+
+summary_df = get_event_summary_stats(filtered_df)
+
+top_year_df = (
+    get_top_athletes_by_year(
+        filtered_df,
+        selected_top_year,
+        top_n=50,
+    ) if selected_top_year is not None else pd.DataFrame()
+)
+
+dist_df = get_performance_distribution(filtered_df)
+
+age_df = get_performance_vs_age(filtered_df)
+
+trend_df = get_trend_slopes(filtered_df)
 
 # =========================================================
 # RENDER FUNCTIONS
@@ -414,6 +455,140 @@ def render_event_progression(df, max_events=20):
 
             else:
                 st.warning("No numeric performances available.")
+
+
+def render_event_summary(summary_df):
+    st.header("📋 Event Summary Statistics")
+    if summary_df.empty:
+        st.info("No event summary data available.")
+        return
+
+    st.dataframe(
+        summary_df.sort_values("event"),
+        use_container_width=True,
+    )
+
+    fig = px.bar(
+        summary_df,
+        x="event",
+        y="mean_perf",
+        error_y="std_perf",
+        title="Mean Performance by Event",
+        template="plotly_dark",
+    )
+    fig.update_layout(xaxis_tickangle=-45, margin=dict(l=20, r=20, t=50, b=120))
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def render_top_athletes_by_year(top_year_df, year):
+    st.header(f"🏅 Top Athletes in {year}")
+    if top_year_df.empty:
+        st.info("No results for this year.")
+        return
+
+    st.dataframe(
+        top_year_df[
+            ["athlete_name", "event", "performance", "year", "venue", "meeting"]
+        ],
+        use_container_width=True,
+    )
+
+    fig = px.bar(
+        top_year_df,
+        x="perf_numeric",
+        y="event",
+        color="athlete_name",
+        orientation="h",
+        title=f"Best Event Performances in {year}",
+        template="plotly_dark",
+    )
+    if top_year_df["is_track"].iloc[0]:
+        fig.update_xaxes(autorange="reversed")
+
+    fig.update_layout(margin=dict(l=20, r=20, t=50, b=20))
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def render_distribution(dist_df):
+    st.header("📊 Performance Distribution by Event")
+    if dist_df.empty:
+        st.info("No distribution data available.")
+        return
+
+    events = sorted(dist_df["event"].unique().tolist())
+    event_choice = st.selectbox("Select event", events, key="distribution_event_choice")
+    subset = dist_df[dist_df["event"] == event_choice]
+
+    fig = px.histogram(
+        subset,
+        x="perf_numeric",
+        nbins=25,
+        color="athlete_name",
+        marginal="box",
+        template="plotly_dark",
+        title=f"{event_choice} Performance Distribution",
+    )
+
+    if subset["is_track"].iloc[0]:
+        fig.update_xaxes(autorange="reversed")
+        fig.update_xaxes(title="Seconds")
+    else:
+        fig.update_xaxes(title="Meters")
+
+    fig.update_layout(margin=dict(l=20, r=20, t=50, b=20))
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def render_performance_vs_age(age_df):
+    st.header("👟 Performance vs Age")
+    if age_df.empty:
+        st.info("No age-based performance data available.")
+        return
+
+    events = sorted(age_df["event"].unique().tolist())
+    event_choice = st.selectbox("Select event", events, key="age_event_choice")
+    subset = age_df[age_df["event"] == event_choice]
+
+    fig = px.scatter(
+        subset,
+        x="age",
+        y="perf_numeric",
+        color="athlete_name",
+        trendline="ols",
+        hover_data=["performance", "year", "age_group"],
+        template="plotly_dark",
+        title=f"{event_choice} Performance vs Age",
+    )
+
+    if subset["is_track"].iloc[0]:
+        fig.update_yaxes(autorange="reversed")
+
+    fig.update_layout(margin=dict(l=20, r=20, t=50, b=20))
+    st.plotly_chart(fig, use_container_width=True)
+
+
+def render_trend_momentum(trend_df):
+    st.header("📈 Trend Slope / Momentum Metrics")
+    if trend_df.empty:
+        st.info("No trend momentum data available.")
+        return
+
+    st.dataframe(
+        trend_df.sort_values("momentum", ascending=False),
+        use_container_width=True,
+    )
+
+    fig = px.bar(
+        trend_df,
+        x="momentum",
+        y="athlete_name",
+        color="event",
+        orientation="h",
+        title="Trend Momentum by Athlete/Event",
+        template="plotly_dark",
+    )
+    fig.update_layout(margin=dict(l=20, r=20, t=50, b=20))
+    st.plotly_chart(fig, use_container_width=True)
 
 
 def render_personal_bests(pb_df):
@@ -526,6 +701,16 @@ if selected_page == "Summary":
     render_summary(filtered_df)
 elif selected_page == "Event Progression":
     render_event_progression(filtered_df, max_events=max_events)
+elif selected_page == "Event Summary":
+    render_event_summary(summary_df)
+elif selected_page == "Top Athletes by Year":
+    render_top_athletes_by_year(top_year_df, selected_top_year)
+elif selected_page == "Distribution":
+    render_distribution(dist_df)
+elif selected_page == "Performance vs Age":
+    render_performance_vs_age(age_df)
+elif selected_page == "Trend Momentum":
+    render_trend_momentum(trend_df)
 elif selected_page == "Personal Bests":
     render_personal_bests(pb_df)
 elif selected_page == "Seasonal Bests":
