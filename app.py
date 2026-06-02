@@ -67,16 +67,16 @@ st.markdown(
 
     body, .stApp, .main, .block-container, .reportview-container .main {
         background-color: var(--color-bg-1) !important;
-        color: var(--color-light) !important;
+        color: var(--color-primary) !important;
     }
 
     section[data-testid="stSidebar"] {
-        background-color: var(--color-bg-2) !important;
+        background-color: var(--color-bg-1) !important;
         color: var(--color-light) !important;
     }
 
     .stButton>button, button {
-        background-color: var(--color-accent-2) !important;
+        background-color: var(--color-primary) !important;
         color: var(--color-dark-1) !important;
         border: 1px solid var(--color-primary) !important;
     }
@@ -88,7 +88,7 @@ st.markdown(
     .st-selectbox, .st-multiselect, .st-slider, .st-date_input {
         background-color: var(--color-bg-2) !important;
         color: var(--color-light) !important;
-        border-color: var(--color-bg-3) !important;
+        border-color: var(--color-bg-2) !important;
     }
 
     .stMarkdown, .stText, .stHeader {
