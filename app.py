@@ -46,6 +46,71 @@ st.markdown(
     """
 )
 
+st.markdown(
+    """
+    <style>
+    :root {
+        --color-primary: #FDDA0D;
+        --color-primary-variant: #221F1F;
+        --color-bg-1: #191919;
+        --color-bg-2: #2C2C2C;
+        --color-bg-3: #333333;
+        --color-accent-1: #DD6BCD;
+        --color-accent-2: #67DAFA;
+        --color-accent-3: #FCE00A;
+        --color-grey-1: #E9EBEC;
+        --color-grey-2: #706F6F;
+        --color-dark-1: #0E0E0E;
+        --color-light: #EFEFEF;
+        --color-light-variant: #A1B4C4;
+    }
+
+    body, .stApp, .main, .block-container, .reportview-container .main {
+        background-color: var(--color-bg-1) !important;
+        color: var(--color-light) !important;
+    }
+
+    section[data-testid="stSidebar"] {
+        background-color: var(--color-bg-2) !important;
+        color: var(--color-light) !important;
+    }
+
+    .stButton>button, button {
+        background-color: var(--color-accent-2) !important;
+        color: var(--color-dark-1) !important;
+        border: 1px solid var(--color-primary) !important;
+    }
+
+    .stButton>button:hover {
+        background-color: var(--color-accent-3) !important;
+    }
+
+    .st-selectbox, .st-multiselect, .st-slider, .st-date_input {
+        background-color: var(--color-bg-2) !important;
+        color: var(--color-light) !important;
+        border-color: var(--color-bg-3) !important;
+    }
+
+    .stMarkdown, .stText, .stHeader {
+        color: var(--color-light) !important;
+    }
+
+    .css-10trblm.egzxvld1 {
+        background-color: var(--color-bg-2) !important;
+    }
+
+    .css-1k5ctt2.egzxvld3 {
+        background-color: var(--color-bg-3) !important;
+    }
+
+    .css-14xtw13.e8zbici2 {
+        color: var(--color-light) !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 # =========================================================
 # NAVIGATION BAR
 # =========================================================
@@ -82,9 +147,25 @@ with st.sidebar:
         default_index=st.session_state.get("page_idx", 0),
         orientation="vertical",
         styles={
-            "container": {"padding": "0!important", "background-color": "#221F1F"},
-            "nav-link": {"font-size": "16px", "text-align": "left", "color": "#706F6F", "margin": "0px", "padding": "10px 14px"},
-            "nav-link-selected": {"background-color": "#ff6b6b", "color": "white"},
+            "container": {
+                "padding": "0!important",
+                "background-color": "var(--color-bg-2)",
+            },
+            "nav-link": {
+                "font-size": "16px",
+                "text-align": "left",
+                "color": "var(--color-grey-1)",
+                "margin": "0px",
+                "padding": "10px 14px",
+            },
+            "nav-link-selected": {
+                "background-color": "var(--color-primary)",
+                "color": "var(--color-primary-variant)",
+            },
+            "icon": {
+                "color": "var(--color-accent-1)",
+                "font-size": "18px",
+            },
         },
     )
     st.session_state["page_idx"] = PAGES.index(selected_page)
