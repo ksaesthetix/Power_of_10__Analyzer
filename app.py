@@ -65,46 +65,144 @@ st.markdown(
         --color-light-variant: #A1B4C4;
     }
 
-    body, .stApp, .main, .block-container, .reportview-container .main {
-        background-color: var(--color-bg-1) !important;
-        color: var(--color-primary) !important;
-    }
-
-    section[data-testid="stSidebar"] {
+    body,
+    .stApp,
+    .stApp .main,
+    .stApp .main .block-container,
+    .reportview-container .main {
         background-color: var(--color-bg-1) !important;
         color: var(--color-light) !important;
     }
 
-    .stButton>button, button {
+    section[data-testid="stSidebar"],
+    .css-1d391kg .css-1d391kg {
+        background-color: var(--color-bg-2) !important;
+        color: var(--color-light) !important;
+    }
+
+    .stButton>button,
+    button {
         background-color: var(--color-primary) !important;
         color: var(--color-dark-1) !important;
         border: 1px solid var(--color-primary) !important;
+        border-radius: 14px !important;
     }
 
-    .stButton>button:hover {
+    .stButton>button:hover,
+    button:hover {
         background-color: var(--color-accent-3) !important;
     }
 
-    .st-selectbox, .st-multiselect, .st-slider, .st-date_input {
-        background-color: var(--color-bg-2) !important;
+    div[data-baseweb="select"],
+    div[data-baseweb="select"] > div,
+    .stSelectbox,
+    .stSelectbox>div,
+    .stMultiSelect,
+    .stMultiSelect>div,
+    .stDateInput,
+    .stTextInput,
+    .stNumberInput,
+    .stSlider,
+    .stTextInput>div {
+        
         color: var(--color-light) !important;
-        border-color: var(--color-bg-2) !important;
+        
+        border-radius: 14px !important;
     }
 
-    .stMarkdown, .stText, .stHeader {
-        color: var(--color-light) !important;
+    .stSlider .css-1n76uvr {
+        border-radius: 14px !important;
     }
 
-    .css-10trblm.egzxvld1 {
-        background-color: var(--color-bg-2) !important;
-    }
-
+    div[data-testid="stForm"] *,
+    div[data-testid="stMetric"] *,
+    .stMarkdown,
+    .stText,
+    .stHeader,
+    .css-14xtw13.e8zbici2,
+    .css-10trblm.egzxvld1,
     .css-1k5ctt2.egzxvld3 {
+        color: var(--color-light) !important;
+    }
+
+    .st-bf {
+        background-color: var(--color-bg-2) !important;
+    }
+
+    .st-bs,
+    .st-bu,
+    .st-bv {
         background-color: var(--color-bg-3) !important;
     }
 
-    .css-14xtw13.e8zbici2 {
+    .css-1r6slb0,
+    .css-1p5g3er,
+    .css-ya1uwj {
+        background-color: var(--color-bg-2) !important;
         color: var(--color-light) !important;
+    }
+
+    .css-18e3th9 {
+        background-color: var(--color-bg-1) !important;
+    }
+
+    .css-1vq4p4l {
+        color: var(--color-light) !important;
+    }
+
+    div[role="tablist"] > button {
+        color: var(--color-light) !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 14px !important;
+        border-bottom: 2px solid transparent !important;
+    }
+
+    div[role="tablist"] > button:hover {
+        background-color: rgba(253, 218, 13, 0.08) !important;
+    }
+
+    div[role="tablist"] > button[aria-selected="true"] {
+        color: var(--color-light) !important;
+        background-color: transparent !important;
+        border: none !important;
+    }
+
+    div[data-baseweb="tag"] {
+        background-color: var(--color-bg-3) !important;
+        color: var(--color-light) !important;
+        border: none !important;
+        border-radius: 14px !important;
+    }
+
+    div[data-baseweb="tag"] .tagText,
+    div[data-baseweb="tag"] .value {
+        color: var(--color-light) !important;
+    }
+
+    div[data-baseweb="tag"][data-state="selected"],
+    div[data-baseweb="tag"][data-selected="true"],
+    div[data-baseweb="tag"] [data-state="selected"] {
+        background-color: var(--color-primary) !important;
+        color: var(--color-primary-variant) !important;
+        border: none !important;
+    }
+
+    div[data-baseweb="tag"][data-state="selected"] .tagText,
+    div[data-baseweb="tag"][data-selected="true"] .tagText,
+    div[data-baseweb="tag"] [data-state="selected"] .tagText {
+        color: var(--color-primary-variant) !important;
+    }
+
+    div[data-baseweb="tag"] [data-state="selected"] svg,
+    div[data-baseweb="tag"][data-state="selected"] svg,
+    div[data-baseweb="tag"][data-selected="true"] svg {
+        color: var(--color-primary-variant) !important;
+    }
+
+    .st-bx {
+        background-color: var(--color-bg-3) !important;
     }
     </style>
     """,
@@ -149,7 +247,7 @@ with st.sidebar:
         styles={
             "container": {
                 "padding": "0!important",
-                "background-color": "var(--color-bg-2)",
+                "background-color": "var(--color-bg-1)",
             },
             "nav-link": {
                 "font-size": "16px",
@@ -163,15 +261,12 @@ with st.sidebar:
                 "color": "var(--color-primary-variant)",
             },
             "icon": {
-                "color": "var(--color-accent-1)",
+                "color": "var(--color-light)",
                 "font-size": "18px",
             },
         },
     )
     st.session_state["page_idx"] = PAGES.index(selected_page)
-
-    st.markdown("---")
-    st.header("Controls")
 
     DEFAULT_COACH_ID = (
         "04129636-6880-4268-9266-de639957a483"
