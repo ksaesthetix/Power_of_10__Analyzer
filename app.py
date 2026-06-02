@@ -69,70 +69,22 @@ EXCLUDED_ATHLETES = {
     "Keelan Welch",
 }
 
-if "page_idx" not in st.session_state:
-    st.session_state["page_idx"] = 0
-
-# Custom CSS for navigation bar
-st.markdown("""
-<style>
-.nav-container {
-    display: flex;
-    gap: 8px;
-    margin: 20px 0;
-    padding: 12px;
-    background-color: #f0f2f6;
-    border-radius: 8px;
-    flex-wrap: wrap;
-}
-.nav-item {
-    padding: 10px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 14px;
-    border: 2px solid transparent;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-.nav-item:hover {
-    background-color: #e0e5f1;
-    border-color: #1f77b4;
-}
-.nav-item.active {
-    background-color: #ff6b6b;
-    color: white;
-    border-color: #ff6b6b;
-}
-</style>
-""", unsafe_allow_html=True)
-
-# Create navigation bar using columns
-cols = st.columns(len(PAGES))
-selected_page = None
-
-for idx, (col, page) in enumerate(zip(cols, PAGES)):
-    with col:
-        if st.button(
-            page,
-            key=f"nav_{idx}",
-            use_container_width=True,
-            help=f"Go to {page}"
-        ):
-            st.session_state["page_idx"] = idx
-            selected_page = page
-
-# Get selected page from session state
-if selected_page is None:
-    selected_page = PAGES[st.session_state["page_idx"]]
-
-st.markdown("---")
-
 # =========================================================
 # SIDEBAR
 # =========================================================
 
 with st.sidebar:
 
+    st.header("Navigation")
+    selected_page = st.radio(
+        "Select page",
+        PAGES,
+        index=st.session_state.get("page_idx", 0),
+        key="selected_page",
+    )
+    st.session_state["page_idx"] = PAGES.index(selected_page)
+
+    st.markdown("---")
     st.header("Controls")
 
     DEFAULT_COACH_ID = (
@@ -140,13 +92,6 @@ with st.sidebar:
     )
 
     coach_id = DEFAULT_COACH_ID
-
-    max_events = st.slider(
-        "Top events to show",
-        min_value=1,
-        max_value=50,
-        value=20
-    )
 
     scrape_button = st.button("Refresh Data")
 
@@ -254,7 +199,7 @@ def render_summary(df):
     c3.metric("Performances", len(filtered_df))
 
 
-def render_performance_trends(df, max_events=20):
+def render_performance_trends(df):
     st.header("📈 Performance Trends")
     st.markdown("Track athlete progression over time and compare all performances or seasonal bests for selected events.")
     athletes_list, events_list, years_list, indoor_list = get_page_filters(df, "Performance Trends")
@@ -270,13 +215,7 @@ def render_performance_trends(df, max_events=20):
 
     display_df = sb_df if trend_mode == "Seasonal Bests" else filtered_df
 
-    top_event_list = (
-        display_df["event"]
-        .value_counts()
-        .head(max_events)
-        .index
-        .tolist()
-    )
+    top_event_list = display_df["event"].dropna().unique().tolist()
 
     if not top_event_list:
         st.info("No events to show.")
@@ -612,7 +551,7 @@ def render_yoy_changes(df):
 if selected_page == "Summary":
     render_summary(analytics_df)
 elif selected_page == "Performance Trends":
-    render_performance_trends(analytics_df, max_events=max_events)
+    render_performance_trends(analytics_df)
 elif selected_page == "Event Summary":
     render_event_summary(analytics_df)
 elif selected_page == "Top Athletes by Year":
