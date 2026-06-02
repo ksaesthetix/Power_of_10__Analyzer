@@ -468,17 +468,31 @@ def render_performance_vs_age(df):
     events = sorted(age_df["event"].unique().tolist())
     event_choice = st.selectbox("Select event", events, key="age_event_choice")
     subset = age_df[age_df["event"] == event_choice]
-
-    fig = px.scatter(
-        subset,
-        x="age",
-        y="perf_numeric",
-        color="athlete_name",
-        trendline="ols",
-        hover_data=["performance", "year", "age_group"],
-        template="plotly_dark",
-        title=f"{event_choice} Performance vs Age",
-    )
+    # Prefer to show an OLS trendline when available (requires statsmodels).
+    # If statsmodels is not installed in the environment, fall back to a
+    # scatter without the trendline and inform the user.
+    try:
+        fig = px.scatter(
+            subset,
+            x="age",
+            y="perf_numeric",
+            color="athlete_name",
+            trendline="ols",
+            hover_data=["performance", "year", "age_group"],
+            template="plotly_dark",
+            title=f"{event_choice} Performance vs Age",
+        )
+    except ModuleNotFoundError:
+        fig = px.scatter(
+            subset,
+            x="age",
+            y="perf_numeric",
+            color="athlete_name",
+            hover_data=["performance", "year", "age_group"],
+            template="plotly_dark",
+            title=f"{event_choice} Performance vs Age (trendline unavailable)",
+        )
+        st.info("Trendline unavailable: install 'statsmodels' to enable OLS trendlines.")
 
     if subset["is_track"].iloc[0]:
         fig.update_yaxes(autorange="reversed")
