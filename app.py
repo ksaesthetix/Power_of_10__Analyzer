@@ -10,7 +10,6 @@ from po10_scraper import (
 
 from analytics import (
     prepare_analytics_df,
-    get_personal_bests,
     get_season_bests,
     get_average_performance,
     get_performance_volatility,
@@ -58,8 +57,6 @@ PAGES = [
     "Distribution",
     "Performance vs Age",
     "Trend Momentum",
-    "Personal Bests",
-    "Seasonal Bests",
     "Top Ranked",
     "Relative Improvement",
     "Volatility",
@@ -552,36 +549,6 @@ def render_trend_momentum(df):
     st.plotly_chart(fig, use_container_width=True)
 
 
-def render_personal_bests(df):
-    st.header("🥇 Personal Bests")
-    st.markdown("Show the best lifetime performances for each athlete and event in the filtered dataset.")
-    athletes_list, events_list, years_list = get_page_filters(df, "Personal Bests")
-    filtered_df = apply_filters(df, athletes_list, events_list, years_list)
-    
-    pb_df = get_personal_bests(filtered_df)
-    
-    st.dataframe(
-        pb_df[["athlete_name", "event", "performance", "date", "venue"]]
-        .sort_values(["event", "athlete_name"]),
-        use_container_width=True,
-    )
-
-
-def render_seasonal_bests(df):
-    st.header("🎯 Seasonal Bests")
-    st.markdown("Display the top performance for each athlete and event in every season, highlighting yearly peaks.")
-    athletes_list, events_list, years_list = get_page_filters(df, "Seasonal Bests")
-    filtered_df = apply_filters(df, athletes_list, events_list, years_list)
-    
-    sb_df = get_season_bests(filtered_df)
-    
-    st.dataframe(
-        sb_df[["athlete_name", "event", "year", "performance", "date"]]
-        .sort_values(["event", "year"]),
-        use_container_width=True,
-    )
-
-
 def render_top_ranked(df):
     st.header("⭐ Top Ranked Performances")
     st.markdown("Highlight the highest ranked performances across athletes and events, focusing on the top results.")
@@ -650,10 +617,6 @@ elif selected_page == "Performance vs Age":
     render_performance_vs_age(analytics_df)
 elif selected_page == "Trend Momentum":
     render_trend_momentum(analytics_df)
-elif selected_page == "Personal Bests":
-    render_personal_bests(analytics_df)
-elif selected_page == "Seasonal Bests":
-    render_seasonal_bests(analytics_df)
 elif selected_page == "Top Ranked":
     render_top_ranked(analytics_df)
 elif selected_page == "Relative Improvement":
