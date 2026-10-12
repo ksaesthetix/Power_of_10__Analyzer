@@ -1,12 +1,15 @@
 # app.py
 
+import os
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 from streamlit_option_menu import option_menu
 
 from po10_scraper import (
-    build_dataframe
+    build_dataframe,
+    Po10AuthError,
 )
 
 from analytics import (
@@ -274,6 +277,38 @@ with st.sidebar:
 
     coach_id = DEFAULT_COACH_ID
 
+    # ---- Power of 10 sign-in ----
+    # Power of 10 now requires an account to view athlete data. Seed the
+    # inputs once from .streamlit/secrets.toml ([po10] username/password)
+    # or the PO10_USERNAME / PO10_PASSWORD env vars; after that the
+    # session_state values are the source of truth.
+    def _po10_secret(key: str) -> str:
+        try:
+            return str(st.secrets["po10"][key])
+        except Exception:
+            return ""
+
+    if "po10_username" not in st.session_state:
+        st.session_state["po10_username"] = (
+            _po10_secret("username") or os.environ.get("PO10_USERNAME", "")
+        )
+    if "po10_password" not in st.session_state:
+        st.session_state["po10_password"] = (
+            _po10_secret("password") or os.environ.get("PO10_PASSWORD", "")
+        )
+
+    creds_missing = not (
+        st.session_state["po10_username"] and st.session_state["po10_password"]
+    )
+
+    with st.expander("Power of 10 sign-in", expanded=creds_missing):
+        st.caption(
+            "Po10 now requires an account to view athlete data. "
+            "Credentials are held in memory for this session only."
+        )
+        st.text_input("Username", key="po10_username")
+        st.text_input("Password", type="password", key="po10_password")
+
     scrape_button = st.button("Refresh Data")
 
 
@@ -282,28 +317,49 @@ with st.sidebar:
 # =========================================================
 
 @st.cache_data(show_spinner=False)
-def load_data(coach_id: str):
-
+def load_data(coach_id: str, _username: str, _password: str):
+    # Leading underscores keep the credentials out of the cache key, so the
+    # password is never hashed/stored by st.cache_data.
     return build_dataframe(
         coach_id=coach_id,
         athlete_ids=[],
-        scope="career"
+        scope="career",
+        username=_username,
+        password=_password,
     )
 
 
 if scrape_button:
+    # Previously the cached frame was returned even after "Refresh Data";
+    # clearing the cache forces a genuine re-scrape (and a fresh sign-in).
+    load_data.clear()
     st.session_state["df"] = None
 
 
-if "df" not in st.session_state or scrape_button:
+if st.session_state.get("df") is None:
+
+    po10_username = st.session_state.get("po10_username", "").strip()
+    po10_password = st.session_state.get("po10_password", "")
+
+    if not po10_username or not po10_password:
+        st.info(
+            "Enter your Power of 10 username and password in the sidebar "
+            "to load athlete data."
+        )
+        st.stop()
 
     with st.spinner(
-        "Scraping Power of 10..."
+        "Signing in and scraping Power of 10..."
     ):
-
-        st.session_state["df"] = load_data(
-            coach_id
-        )
+        try:
+            st.session_state["df"] = load_data(
+                coach_id,
+                po10_username,
+                po10_password,
+            )
+        except Po10AuthError as exc:
+            st.error(f"Power of 10 sign-in failed: {exc}")
+            st.stop()
 
 
 df = st.session_state.get("df")

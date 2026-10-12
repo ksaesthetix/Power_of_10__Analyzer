@@ -1,0 +1,49 @@
+# --- Secrets / credentials ---
+.streamlit/secrets.toml
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+*.egg
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Tooling caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+
+# --- Streamlit ---
+# keep config.toml (theme) tracked; only secrets are ignored above
+.streamlit/cache/
+
+# --- Editors / OS ---
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- Scratch / local data ---
+_test/
+*.csv
+*.parquet
+*.log

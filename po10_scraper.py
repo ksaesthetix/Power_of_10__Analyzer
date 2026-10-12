@@ -1,15 +1,18 @@
 import json
+import os
 import re
 import time
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
+from urllib.parse import urljoin
 
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
 BASE_URL = "https://www.powerof10.uk"
+LOGIN_URL = BASE_URL + "/Auth/Login"
 COACH_URL = BASE_URL + "/Home/Coach/{coach_id}"
 ATHLETE_URL = BASE_URL + "/Home/Athlete/{athlete_id}"
 HEADERS = {
@@ -23,6 +26,100 @@ HEADERS = {
     "Referer": "https://www.powerof10.uk/",
 }
 REQUEST_DELAY = 1.5
+
+# Environment variables consulted when credentials aren't passed explicitly
+USERNAME_ENV = "PO10_USERNAME"
+PASSWORD_ENV = "PO10_PASSWORD"
+
+
+class Po10AuthError(Exception):
+    """Raised when Power of 10 requires a sign-in that failed or wasn't supplied."""
+
+
+def _is_login_url(url: str) -> bool:
+    return "/auth/login" in (url or "").lower()
+
+
+def _find_login_form(soup: BeautifulSoup):
+    """Return the <form> that contains a password input, or None."""
+    for form in soup.find_all("form"):
+        if form.find("input", attrs={"type": "password"}):
+            return form
+    return None
+
+
+def _extract_validation_errors(soup: BeautifulSoup) -> str:
+    messages: list[str] = []
+    for node in soup.select(".validation-summary-errors, .field-validation-error"):
+        text = clean(node.get_text(" "))
+        if text and text not in messages:
+            messages.append(text)
+    return "; ".join(messages)
+
+
+def login(session: requests.Session, username: str, password: str) -> None:
+    """Sign in to Power of 10 so subsequent requests on ``session`` are authenticated.
+
+    The sign-in form is parsed at runtime, so the ASP.NET anti-forgery token and
+    the exact input names come from the page rather than being hard-coded.
+    """
+    if not username or not password:
+        raise Po10AuthError("A Power of 10 username and password are required.")
+
+    try:
+        page = session.get(LOGIN_URL, headers=HEADERS, timeout=15)
+        page.raise_for_status()
+    except requests.RequestException as exc:
+        raise Po10AuthError(f"Could not load the Power of 10 sign-in page: {exc}") from exc
+
+    soup = BeautifulSoup(page.text, "html.parser")
+    form = _find_login_form(soup)
+    if form is None:
+        raise Po10AuthError("Could not find the sign-in form on the Power of 10 login page.")
+
+    payload: dict[str, str] = {}
+    username_field: Optional[str] = None
+    password_field: Optional[str] = None
+
+    for field in form.find_all(["input", "button"]):
+        name = field.get("name")
+        if not name:
+            continue
+        default_type = "submit" if field.name == "button" else "text"
+        field_type = (field.get("type") or default_type).lower()
+
+        if field_type == "password":
+            password_field = name
+        elif field_type in ("text", "email") and username_field is None:
+            username_field = name
+        elif field_type == "hidden":
+            payload[name] = field.get("value", "")
+        elif field_type == "submit" and field.get("value"):
+            payload[name] = field.get("value")
+        # checkboxes (e.g. "remember me") are left unticked; MVC posts their hidden "false" twin
+
+    if username_field is None or password_field is None:
+        raise Po10AuthError("Sign-in form did not contain the expected username/password fields.")
+
+    payload[username_field] = username
+    payload[password_field] = password
+
+    action = urljoin(page.url, form.get("action") or LOGIN_URL)
+    headers = {**HEADERS, "Referer": page.url, "Origin": BASE_URL}
+
+    try:
+        resp = session.post(action, data=payload, headers=headers, timeout=15, allow_redirects=True)
+        resp.raise_for_status()
+    except requests.RequestException as exc:
+        raise Po10AuthError(f"Sign-in request to Power of 10 failed: {exc}") from exc
+
+    result = BeautifulSoup(resp.text, "html.parser")
+    if _is_login_url(resp.url) or _find_login_form(result) is not None:
+        detail = _extract_validation_errors(result)
+        raise Po10AuthError(
+            "Power of 10 rejected the sign-in"
+            + (f": {detail}" if detail else ". Check the username and password.")
+        )
 
 
 @dataclass
@@ -52,9 +149,15 @@ def get_soup(url: str, session: requests.Session) -> Optional[BeautifulSoup]:
     try:
         response = session.get(url, headers=HEADERS, timeout=15)
         response.raise_for_status()
-        return BeautifulSoup(response.text, "html.parser")
     except requests.RequestException:
         return None
+
+    if _is_login_url(response.url):
+        raise Po10AuthError(
+            "Power of 10 redirected to its sign-in page. Supply a valid username and "
+            f"password (or set {USERNAME_ENV} / {PASSWORD_ENV}) and try again."
+        )
+    return BeautifulSoup(response.text, "html.parser")
 
 
 def get_athlete_ids_from_coach(coach_id: str, session: requests.Session) -> list[tuple[str, str]]:
@@ -257,12 +360,26 @@ def build_dataframe(
     coach_id: str = "",
     athlete_ids: Optional[list[str]] = None,
     scope: str = "career",
+    username: Optional[str] = None,
+    password: Optional[str] = None,
 ) -> pd.DataFrame:
+    """Scrape performances for a coach's athletes and/or explicit athlete IDs.
+
+    Power of 10 now requires an account to view athlete data. Credentials are
+    taken from ``username``/``password`` if given, otherwise from the
+    ``PO10_USERNAME`` / ``PO10_PASSWORD`` environment variables. Raises
+    ``Po10AuthError`` if the sign-in fails or the site demands one.
+    """
     athlete_ids = athlete_ids or []
     athlete_roster: list[tuple[str, str]] = [(aid, "") for aid in athlete_ids if aid]
 
+    username = username or os.environ.get(USERNAME_ENV, "")
+    password = password or os.environ.get(PASSWORD_ENV, "")
+
     with requests.Session() as session:
         session.get(BASE_URL + "/", headers=HEADERS, timeout=15)
+        if username and password:
+            login(session, username, password)
         if coach_id:
             roster = get_athlete_ids_from_coach(coach_id, session)
             existing = {aid for aid, _ in athlete_roster}
@@ -344,3 +461,19 @@ def parse_perf_numeric(perf: str, kind: str):
         except ValueError:
             return None
     return None
+
+
+if __name__ == "__main__":
+    # Quick smoke test for the sign-in + scrape, outside Streamlit:
+    #   PO10_USERNAME=... PO10_PASSWORD=... python po10_scraper.py --coach <coach_id>
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Check Power of 10 sign-in and scraping.")
+    parser.add_argument("--coach", default="", help="Coach ID to scrape")
+    parser.add_argument("--athlete", action="append", default=[], help="Athlete ID (repeatable)")
+    parser.add_argument("--scope", default="career", choices=["career", "grid"])
+    args = parser.parse_args()
+
+    frame = build_dataframe(coach_id=args.coach, athlete_ids=args.athlete, scope=args.scope)
+    athletes = frame["athlete_name"].nunique() if not frame.empty else 0
+    print(f"{len(frame)} performances across {athletes} athletes")
