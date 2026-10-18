@@ -1,0 +1,596 @@
+event,sex,age_group,level,standard,source
+100,M,U15|U14,ESAA National,11.4,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U15|U14,ESAA Entry,11.6,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U15|U14,ESAA County,12.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U15|U14,ESAA District,12.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U15|U14,ESAA School,13.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U15|U14,ESAA National,23.3,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U15|U14,ESAA Entry,23.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U15|U14,ESAA County,24.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U15|U14,ESAA District,25.6,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U15|U14,ESAA School,27.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,M,U15|U14,ESAA National,36.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,M,U15|U14,ESAA Entry,38.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,M,U15|U14,ESAA County,40.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,M,U15|U14,ESAA District,42.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,M,U15|U14,ESAA School,45.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U15|U14,ESAA National,2:02.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U15|U14,ESAA Entry,2:05.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U15|U14,ESAA County,2:13.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U15|U14,ESAA District,2:20.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U15|U14,ESAA School,2:27.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U15|U14,ESAA National,4:13.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U15|U14,ESAA Entry,4:19.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U15|U14,ESAA County,4:36.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U15|U14,ESAA District,4:50.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U15|U14,ESAA School,5:05.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,M,U15|U14,ESAA National,11.7,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,M,U15|U14,ESAA Entry,12.1,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,M,U15|U14,ESAA County,12.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,M,U15|U14,ESAA District,13.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,M,U15|U14,ESAA School,15.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U15|U14,ESAA National,1.80,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U15|U14,ESAA Entry,1.74,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U15|U14,ESAA County,1.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U15|U14,ESAA District,1.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U15|U14,ESAA School,1.45,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U15|U14,ESAA National,3.30,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U15|U14,ESAA Entry,3.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U15|U14,ESAA County,2.30,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U15|U14,ESAA District,2.10,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U15|U14,ESAA School,2.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U15|U14,ESAA National,5.95,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U15|U14,ESAA Entry,5.80,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U15|U14,ESAA County,5.30,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U15|U14,ESAA District,5.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U15|U14,ESAA School,4.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U15|U14,ESAA National,12.40,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U15|U14,ESAA Entry,12.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U15|U14,ESAA County,11.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U15|U14,ESAA District,10.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U15|U14,ESAA School,9.25,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U15|U14,ESAA National,13.30,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U15|U14,ESAA Entry,12.30,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U15|U14,ESAA County,10.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U15|U14,ESAA District,9.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U15|U14,ESAA School,9.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U15|U14,ESAA National,38.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U15|U14,ESAA Entry,35.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U15|U14,ESAA County,28.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U15|U14,ESAA District,24.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U15|U14,ESAA School,20.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U15|U14,ESAA National,47.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U15|U14,ESAA Entry,44.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U15|U14,ESAA County,35.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U15|U14,ESAA District,30.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U15|U14,ESAA School,28.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U15|U14,ESAA National,45.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U15|U14,ESAA Entry,38.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U15|U14,ESAA County,27.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U15|U14,ESAA District,24.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U15|U14,ESAA School,21.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000W,M,U15|U14,ESAA National,15:30.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+Pen,M,U15|U14,ESAA Entry,2800,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026) - combined events"
+100,F,U15|U14,ESAA National,12.4,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U15|U14,ESAA Entry,12.7,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U15|U14,ESAA County,13.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U15|U14,ESAA District,13.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U15|U14,ESAA School,14.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U15|U14,ESAA National,25.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U15|U14,ESAA Entry,26.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U15|U14,ESAA County,27.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U15|U14,ESAA District,28.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U15|U14,ESAA School,30.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U15|U14,ESAA National,41.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U15|U14,ESAA Entry,42.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U15|U14,ESAA County,44.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U15|U14,ESAA District,46.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U15|U14,ESAA School,48.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U15|U14,ESAA National,2:14.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U15|U14,ESAA Entry,2:17.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U15|U14,ESAA County,2:26.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U15|U14,ESAA District,2:33.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U15|U14,ESAA School,2:50.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U15|U14,ESAA National,4:38.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U15|U14,ESAA Entry,4:46.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U15|U14,ESAA County,5:03.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U15|U14,ESAA District,5:20.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U15|U14,ESAA School,5:55.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+75H,F,U15|U14,ESAA National,11.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+75H,F,U15|U14,ESAA Entry,11.9,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+75H,F,U15|U14,ESAA County,12.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+75H,F,U15|U14,ESAA District,13.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+75H,F,U15|U14,ESAA School,14.1,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U15|U14,ESAA National,1.64,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U15|U14,ESAA Entry,1.58,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U15|U14,ESAA County,1.45,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U15|U14,ESAA District,1.40,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U15|U14,ESAA School,1.30,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U15|U14,ESAA National,3.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U15|U14,ESAA Entry,2.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U15|U14,ESAA County,2.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U15|U14,ESAA District,1.80,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U15|U14,ESAA School,1.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U15|U14,ESAA National,5.35,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U15|U14,ESAA Entry,5.10,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U15|U14,ESAA County,4.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U15|U14,ESAA District,4.40,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U15|U14,ESAA School,4.10,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U15|U14,ESAA National,11.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U15|U14,ESAA Entry,10.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U15|U14,ESAA County,9.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U15|U14,ESAA District,8.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U15|U14,ESAA School,7.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U15|U14,ESAA National,30.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U15|U14,ESAA Entry,28.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U15|U14,ESAA County,22.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U15|U14,ESAA District,19.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U15|U14,ESAA School,18.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U15|U14,ESAA National,35.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U15|U14,ESAA Entry,33.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U15|U14,ESAA County,28.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U15|U14,ESAA District,23.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U15|U14,ESAA School,21.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U15|U14,ESAA National,41.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U15|U14,ESAA Entry,37.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U15|U14,ESAA County,25.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U15|U14,ESAA District,21.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U15|U14,ESAA School,20.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000W,F,U15|U14,ESAA National,16:30.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+Pen,F,U15|U14,ESAA Entry,3100,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026) - combined events"
+100,M,U17|U16,ESAA National,10.9,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U17|U16,ESAA Entry,11.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U17|U16,ESAA County,11.7,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U17|U16,ESAA District,12.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U17|U16,ESAA School,12.3,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U17|U16,ESAA National,22.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U17|U16,ESAA Entry,22.6,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U17|U16,ESAA County,23.7,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U17|U16,ESAA District,24.4,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U17|U16,ESAA School,26.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,M,U17|U16,ESAA National,49.7,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,M,U17|U16,ESAA Entry,51.1,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,M,U17|U16,ESAA County,53.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,M,U17|U16,ESAA District,55.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,M,U17|U16,ESAA School,59.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U17|U16,ESAA National,1:55.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U17|U16,ESAA Entry,1:57.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U17|U16,ESAA County,2:05.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U17|U16,ESAA District,2:10.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U17|U16,ESAA School,2:20.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U17|U16,ESAA National,4:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U17|U16,ESAA Entry,4:04.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U17|U16,ESAA County,4:20.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U17|U16,ESAA District,4:30.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U17|U16,ESAA School,4:55.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,M,U17|U16,ESAA National,8:44.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,M,U17|U16,ESAA Entry,8:49.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,M,U17|U16,ESAA County,9:35.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,M,U17|U16,ESAA District,10:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,M,U17|U16,ESAA School,10:45.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100H,M,U17|U16,ESAA National,13.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100H,M,U17|U16,ESAA Entry,14.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100H,M,U17|U16,ESAA County,15.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100H,M,U17|U16,ESAA District,16.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100H,M,U17|U16,ESAA School,17.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,M,U17|U16,ESAA National,56.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,M,U17|U16,ESAA Entry,58.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,M,U17|U16,ESAA County,64.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,M,U17|U16,ESAA District,68.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,M,U17|U16,ESAA School,72.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,M,U17|U16,ESAA National,4:32.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,M,U17|U16,ESAA Entry,4:37.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,M,U17|U16,ESAA County,5:05.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,M,U17|U16,ESAA District,5:20.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,M,U17|U16,ESAA School,5:55.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U17|U16,ESAA National,1.94,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U17|U16,ESAA Entry,1.88,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U17|U16,ESAA County,1.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U17|U16,ESAA District,1.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U17|U16,ESAA School,1.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U17|U16,ESAA National,4.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U17|U16,ESAA Entry,3.90,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U17|U16,ESAA County,2.80,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U17|U16,ESAA District,2.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U17|U16,ESAA School,2.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U17|U16,ESAA National,6.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U17|U16,ESAA Entry,6.40,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U17|U16,ESAA County,5.80,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U17|U16,ESAA District,5.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U17|U16,ESAA School,5.30,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U17|U16,ESAA National,14.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U17|U16,ESAA Entry,13.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U17|U16,ESAA County,12.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U17|U16,ESAA District,11.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U17|U16,ESAA School,10.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U17|U16,ESAA National,14.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U17|U16,ESAA Entry,13.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U17|U16,ESAA County,11.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U17|U16,ESAA District,10.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U17|U16,ESAA School,9.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U17|U16,ESAA National,44.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U17|U16,ESAA Entry,41.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U17|U16,ESAA County,33.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U17|U16,ESAA District,26.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U17|U16,ESAA School,24.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U17|U16,ESAA National,54.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U17|U16,ESAA Entry,52.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U17|U16,ESAA County,40.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U17|U16,ESAA District,33.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U17|U16,ESAA School,30.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U17|U16,ESAA National,53.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U17|U16,ESAA Entry,49.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U17|U16,ESAA County,30.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U17|U16,ESAA District,24.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U17|U16,ESAA School,20.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+5000W,M,U17|U16,ESAA National,26:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+Oct,M,U17|U16,ESAA Entry,4800,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026) - combined events"
+100,F,U17|U16,ESAA National,12.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U17|U16,ESAA Entry,12.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U17|U16,ESAA County,13.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U17|U16,ESAA District,13.4,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U17|U16,ESAA School,14.1,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U17|U16,ESAA National,25.1,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U17|U16,ESAA Entry,25.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U17|U16,ESAA County,26.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U17|U16,ESAA District,27.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U17|U16,ESAA School,29.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U17|U16,ESAA National,39.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U17|U16,ESAA Entry,41.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U17|U16,ESAA County,43.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U17|U16,ESAA District,45.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300,F,U17|U16,ESAA School,47.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U17|U16,ESAA National,2:12.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U17|U16,ESAA Entry,2:14.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U17|U16,ESAA County,2:25.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U17|U16,ESAA District,2:32.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U17|U16,ESAA School,2:47.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U17|U16,ESAA National,4:35.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U17|U16,ESAA Entry,4:43.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U17|U16,ESAA County,5:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U17|U16,ESAA District,5:15.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U17|U16,ESAA School,5:50.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,F,U17|U16,ESAA National,9:58.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,F,U17|U16,ESAA Entry,10:17.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,F,U17|U16,ESAA County,11:10.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,F,U17|U16,ESAA District,12:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,F,U17|U16,ESAA School,12:20.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,F,U17|U16,ESAA National,11.6,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,F,U17|U16,ESAA Entry,12.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,F,U17|U16,ESAA County,13.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,F,U17|U16,ESAA District,14.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+80H,F,U17|U16,ESAA School,15.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300H,F,U17|U16,ESAA National,45.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300H,F,U17|U16,ESAA Entry,46.4,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300H,F,U17|U16,ESAA County,51.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300H,F,U17|U16,ESAA District,54.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+300H,F,U17|U16,ESAA School,60.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,F,U17|U16,ESAA National,5:13.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,F,U17|U16,ESAA Entry,5:23.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,F,U17|U16,ESAA County,5:50.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,F,U17|U16,ESAA District,6:15.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,F,U17|U16,ESAA School,6:30.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U17|U16,ESAA National,1.71,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U17|U16,ESAA Entry,1.65,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U17|U16,ESAA County,1.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U17|U16,ESAA District,1.45,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U17|U16,ESAA School,1.35,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U17|U16,ESAA National,3.40,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U17|U16,ESAA Entry,3.10,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U17|U16,ESAA County,2.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U17|U16,ESAA District,1.90,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U17|U16,ESAA School,1.80,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U17|U16,ESAA National,5.55,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U17|U16,ESAA Entry,5.40,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U17|U16,ESAA County,4.90,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U17|U16,ESAA District,4.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U17|U16,ESAA School,4.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,F,U17|U16,ESAA National,11.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,F,U17|U16,ESAA Entry,10.90,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,F,U17|U16,ESAA County,10.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,F,U17|U16,ESAA District,9.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,F,U17|U16,ESAA School,8.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U17|U16,ESAA National,12.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U17|U16,ESAA Entry,11.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U17|U16,ESAA County,10.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U17|U16,ESAA District,8.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U17|U16,ESAA School,7.75,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U17|U16,ESAA National,36.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U17|U16,ESAA Entry,33.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U17|U16,ESAA County,26.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U17|U16,ESAA District,21.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U17|U16,ESAA School,20.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U17|U16,ESAA National,41.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U17|U16,ESAA Entry,38.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U17|U16,ESAA County,30.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U17|U16,ESAA District,25.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U17|U16,ESAA School,23.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U17|U16,ESAA National,53.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U17|U16,ESAA Entry,48.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U17|U16,ESAA County,34.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U17|U16,ESAA District,23.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U17|U16,ESAA School,20.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000W,F,U17|U16,ESAA National,16:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+Hep,F,U17|U16,ESAA Entry,4700,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026) - combined events"
+100,M,U20|U18,ESAA National,10.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U20|U18,ESAA Entry,10.9,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U20|U18,ESAA County,11.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,M,U20|U18,ESAA District,12.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U20|U18,ESAA National,21.9,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U20|U18,ESAA Entry,22.2,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U20|U18,ESAA County,23.4,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,M,U20|U18,ESAA District,24.4,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,M,U20|U18,ESAA National,48.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,M,U20|U18,ESAA Entry,49.7,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,M,U20|U18,ESAA County,53.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,M,U20|U18,ESAA District,55.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U20|U18,ESAA National,1:53.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U20|U18,ESAA Entry,1:56.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U20|U18,ESAA County,2:02.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,M,U20|U18,ESAA District,2:10.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U20|U18,ESAA National,3:55.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U20|U18,ESAA Entry,3:58.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U20|U18,ESAA County,4:15.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,M,U20|U18,ESAA District,4:30.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,M,U20|U18,ESAA National,8:24.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,M,U20|U18,ESAA Entry,8:33.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,M,U20|U18,ESAA County,9:20.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,M,U20|U18,ESAA District,10:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+110H,M,U20|U18,ESAA National,14.6,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+110H,M,U20|U18,ESAA Entry,15.3,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+110H,M,U20|U18,ESAA County,17.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+110H,M,U20|U18,ESAA District,18.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,M,U20|U18,ESAA National,55.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,M,U20|U18,ESAA Entry,57.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,M,U20|U18,ESAA County,64.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,M,U20|U18,ESAA District,68.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+2000SC,M,U20|U18,ESAA National,6:08.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+2000SC,M,U20|U18,ESAA Entry,6:18.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+2000SC,M,U20|U18,ESAA County,6:50.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+2000SC,M,U20|U18,ESAA District,7:15.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U20|U18,ESAA National,2.01,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U20|U18,ESAA Entry,1.95,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U20|U18,ESAA County,1.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,M,U20|U18,ESAA District,1.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U20|U18,ESAA National,4.40,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U20|U18,ESAA Entry,4.10,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U20|U18,ESAA County,2.80,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,M,U20|U18,ESAA District,2.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U20|U18,ESAA National,6.80,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U20|U18,ESAA Entry,6.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U20|U18,ESAA County,5.80,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,M,U20|U18,ESAA District,5.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U20|U18,ESAA National,14.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U20|U18,ESAA Entry,13.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U20|U18,ESAA County,12.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,M,U20|U18,ESAA District,11.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U20|U18,ESAA National,13.70,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U20|U18,ESAA Entry,12.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U20|U18,ESAA County,10.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,M,U20|U18,ESAA District,9.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U20|U18,ESAA National,46.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U20|U18,ESAA Entry,40.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U20|U18,ESAA County,30.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,M,U20|U18,ESAA District,24.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U20|U18,ESAA National,56.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U20|U18,ESAA Entry,52.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U20|U18,ESAA County,38.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,M,U20|U18,ESAA District,32.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U20|U18,ESAA National,58.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U20|U18,ESAA Entry,50.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U20|U18,ESAA County,28.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,M,U20|U18,ESAA District,22.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+5000W,M,U20|U18,ESAA National,25:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+Dec,M,U20|U18,ESAA Entry,6000,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026) - combined events"
+100,F,U20|U18,ESAA National,12.1,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U20|U18,ESAA Entry,12.4,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U20|U18,ESAA County,13.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100,F,U20|U18,ESAA District,13.4,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U20|U18,ESAA National,25.1,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U20|U18,ESAA Entry,25.7,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U20|U18,ESAA County,26.8,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+200,F,U20|U18,ESAA District,27.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,F,U20|U18,ESAA National,57.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,F,U20|U18,ESAA Entry,58.3,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,F,U20|U18,ESAA County,62.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400,F,U20|U18,ESAA District,65.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U20|U18,ESAA National,2:12.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U20|U18,ESAA Entry,2:14.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U20|U18,ESAA County,2:25.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+800,F,U20|U18,ESAA District,2:32.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U20|U18,ESAA National,4:33.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U20|U18,ESAA Entry,4:42.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U20|U18,ESAA County,5:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500,F,U20|U18,ESAA District,5:15.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,F,U20|U18,ESAA National,9:53.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,F,U20|U18,ESAA Entry,10:12.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,F,U20|U18,ESAA County,11:10.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+3000,F,U20|U18,ESAA District,12:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100H,F,U20|U18,ESAA National,14.6,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100H,F,U20|U18,ESAA Entry,15.3,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100H,F,U20|U18,ESAA County,17.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+100H,F,U20|U18,ESAA District,18.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,F,U20|U18,ESAA National,64.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,F,U20|U18,ESAA Entry,65.5,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,F,U20|U18,ESAA County,73.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+400H,F,U20|U18,ESAA District,76.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,F,U20|U18,ESAA National,5:10.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,F,U20|U18,ESAA Entry,5:17.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,F,U20|U18,ESAA County,6:00.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+1500SC,F,U20|U18,ESAA District,6:15.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U20|U18,ESAA National,1.72,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U20|U18,ESAA Entry,1.66,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U20|U18,ESAA County,1.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HJ,F,U20|U18,ESAA District,1.45,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U20|U18,ESAA National,3.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U20|U18,ESAA Entry,3.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U20|U18,ESAA County,2.20,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+PV,F,U20|U18,ESAA District,1.90,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U20|U18,ESAA National,5.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U20|U18,ESAA Entry,5.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U20|U18,ESAA County,4.90,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+LJ,F,U20|U18,ESAA District,4.60,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,F,U20|U18,ESAA National,11.40,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,F,U20|U18,ESAA Entry,11.10,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,F,U20|U18,ESAA County,10.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+TJ,F,U20|U18,ESAA District,9.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U20|U18,ESAA National,11.40,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U20|U18,ESAA Entry,10.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U20|U18,ESAA County,9.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+SP,F,U20|U18,ESAA District,7.50,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U20|U18,ESAA National,39.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U20|U18,ESAA Entry,35.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U20|U18,ESAA County,26.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+DT,F,U20|U18,ESAA District,21.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U20|U18,ESAA National,40.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U20|U18,ESAA Entry,37.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U20|U18,ESAA County,28.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+JT,F,U20|U18,ESAA District,23.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U20|U18,ESAA National,47.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U20|U18,ESAA Entry,42.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U20|U18,ESAA County,30.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+HT,F,U20|U18,ESAA District,22.00,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+5000W,F,U20|U18,ESAA National,27:30.0,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026)"
+Hep,F,U20|U18,ESAA Entry,4350,"ESAA T&F Championships 2026 standards (via Hampshire Athletics PDF, Apr 2026) - combined events"
+100,M,SEN|U23,EA Champs entry,10.90,England Athletics 2026 Outdoor Championships entry standards v2
+100,M,U20,EA Champs entry,11.00,England Athletics 2026 Outdoor Championships entry standards v2
+100,M,U18,EA Champs entry,11.30,England Athletics 2026 Outdoor Championships entry standards v2
+100,M,U16,EA Champs entry,11.80,England Athletics 2026 Outdoor Championships entry standards v2
+200,M,SEN|U23,EA Champs entry,22.20,England Athletics 2026 Outdoor Championships entry standards v2
+200,M,U20,EA Champs entry,22.50,England Athletics 2026 Outdoor Championships entry standards v2
+200,M,U18,EA Champs entry,23.20,England Athletics 2026 Outdoor Championships entry standards v2
+200,M,U16,EA Champs entry,24.20,England Athletics 2026 Outdoor Championships entry standards v2
+400,M,SEN|U23,EA Champs entry,49.30,England Athletics 2026 Outdoor Championships entry standards v2
+400,M,U20,EA Champs entry,51.00,England Athletics 2026 Outdoor Championships entry standards v2
+400,M,U18,EA Champs entry,53.00,England Athletics 2026 Outdoor Championships entry standards v2
+300,M,U16,EA Champs entry,40.80,England Athletics 2026 Outdoor Championships entry standards v2
+800,M,SEN|U23,EA Champs entry,1:52.0,England Athletics 2026 Outdoor Championships entry standards v2
+800,M,U20,EA Champs entry,1:54.0,England Athletics 2026 Outdoor Championships entry standards v2
+800,M,U18,EA Champs entry,1:58.0,England Athletics 2026 Outdoor Championships entry standards v2
+800,M,U16,EA Champs entry,2:05.0,England Athletics 2026 Outdoor Championships entry standards v2
+1500,M,SEN|U23,EA Champs entry,3:48.0,England Athletics 2026 Outdoor Championships entry standards v2
+1500,M,U20,EA Champs entry,3:56.0,England Athletics 2026 Outdoor Championships entry standards v2
+1500,M,U18,EA Champs entry,4:06.0,England Athletics 2026 Outdoor Championships entry standards v2
+1500,M,U16,EA Champs entry,4:20.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000,M,U20,EA Champs entry,8:34.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000,M,U18,EA Champs entry,9:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000,M,U16,EA Champs entry,9:45.0,England Athletics 2026 Outdoor Championships entry standards v2
+5000,M,SEN|U23,EA Champs entry,14:35.0,England Athletics 2026 Outdoor Championships entry standards v2
+5000,M,U20,EA Champs entry,15:20.0,England Athletics 2026 Outdoor Championships entry standards v2
+110H,M,SEN|U23,EA Champs entry,15.90,England Athletics 2026 Outdoor Championships entry standards v2
+110H,M,U20,EA Champs entry,16.00,England Athletics 2026 Outdoor Championships entry standards v2
+110H,M,U18,EA Champs entry,16.00,England Athletics 2026 Outdoor Championships entry standards v2
+100H,M,U16,EA Champs entry,15.00,England Athletics 2026 Outdoor Championships entry standards v2
+400H,M,SEN|U23,EA Champs entry,57.00,England Athletics 2026 Outdoor Championships entry standards v2
+400H,M,U20,EA Champs entry,61.00,England Athletics 2026 Outdoor Championships entry standards v2
+400H,M,U18,EA Champs entry,63.00,England Athletics 2026 Outdoor Championships entry standards v2
+300H,M,U16,EA Champs entry,49.65,England Athletics 2026 Outdoor Championships entry standards v2
+3000W,M,SEN|U23,EA Champs entry,16:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000W,M,U20,EA Champs entry,16:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000W,M,U18,EA Champs entry,17:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000W,M,U16,EA Champs entry,18:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+HJ,M,SEN|U23,EA Champs entry,2.00,England Athletics 2026 Outdoor Championships entry standards v2
+HJ,M,U20,EA Champs entry,1.95,England Athletics 2026 Outdoor Championships entry standards v2
+HJ,M,U18,EA Champs entry,1.90,England Athletics 2026 Outdoor Championships entry standards v2
+HJ,M,U16,EA Champs entry,1.75,England Athletics 2026 Outdoor Championships entry standards v2
+LJ,M,SEN|U23,EA Champs entry,7.20,England Athletics 2026 Outdoor Championships entry standards v2
+LJ,M,U20,EA Champs entry,6.80,England Athletics 2026 Outdoor Championships entry standards v2
+LJ,M,U18,EA Champs entry,6.60,England Athletics 2026 Outdoor Championships entry standards v2
+LJ,M,U16,EA Champs entry,6.00,England Athletics 2026 Outdoor Championships entry standards v2
+TJ,M,SEN|U23,EA Champs entry,14.50,England Athletics 2026 Outdoor Championships entry standards v2
+TJ,M,U20,EA Champs entry,13.50,England Athletics 2026 Outdoor Championships entry standards v2
+TJ,M,U18,EA Champs entry,13.20,England Athletics 2026 Outdoor Championships entry standards v2
+TJ,M,U16,EA Champs entry,11.50,England Athletics 2026 Outdoor Championships entry standards v2
+PV,M,SEN|U23,EA Champs entry,4.60,England Athletics 2026 Outdoor Championships entry standards v2
+PV,M,U20,EA Champs entry,4.00,England Athletics 2026 Outdoor Championships entry standards v2
+PV,M,U18,EA Champs entry,3.80,England Athletics 2026 Outdoor Championships entry standards v2
+PV,M,U16,EA Champs entry,3.40,England Athletics 2026 Outdoor Championships entry standards v2
+SP,M,SEN|U23,EA Champs entry,14.00,England Athletics 2026 Outdoor Championships entry standards v2
+SP,M,U20,EA Champs entry,13.00,England Athletics 2026 Outdoor Championships entry standards v2
+SP,M,U18,EA Champs entry,14.00,England Athletics 2026 Outdoor Championships entry standards v2
+SP,M,U16,EA Champs entry,12.50,England Athletics 2026 Outdoor Championships entry standards v2
+DT,M,SEN|U23,EA Champs entry,45.00,England Athletics 2026 Outdoor Championships entry standards v2
+DT,M,U20,EA Champs entry,40.00,England Athletics 2026 Outdoor Championships entry standards v2
+DT,M,U18,EA Champs entry,40.00,England Athletics 2026 Outdoor Championships entry standards v2
+DT,M,U16,EA Champs entry,35.00,England Athletics 2026 Outdoor Championships entry standards v2
+HT,M,SEN|U23,EA Champs entry,57.00,England Athletics 2026 Outdoor Championships entry standards v2
+HT,M,U20,EA Champs entry,48.00,England Athletics 2026 Outdoor Championships entry standards v2
+HT,M,U18,EA Champs entry,46.50,England Athletics 2026 Outdoor Championships entry standards v2
+HT,M,U16,EA Champs entry,39.00,England Athletics 2026 Outdoor Championships entry standards v2
+JT,M,SEN|U23,EA Champs entry,58.00,England Athletics 2026 Outdoor Championships entry standards v2
+JT,M,U20,EA Champs entry,51.00,England Athletics 2026 Outdoor Championships entry standards v2
+JT,M,U18,EA Champs entry,50.00,England Athletics 2026 Outdoor Championships entry standards v2
+JT,M,U16,EA Champs entry,43.00,England Athletics 2026 Outdoor Championships entry standards v2
+Dec,M,SEN|U23,EA Champs entry,6000,England Athletics 2026 Outdoor Championships entry standards v2
+Dec,M,U20,EA Champs entry,5300,England Athletics 2026 Outdoor Championships entry standards v2
+100,F,U16,EA Champs entry,12.85,England Athletics 2026 Outdoor Championships entry standards v2
+100,F,U18,EA Champs entry,12.60,England Athletics 2026 Outdoor Championships entry standards v2
+100,F,U20,EA Champs entry,12.50,England Athletics 2026 Outdoor Championships entry standards v2
+100,F,SEN|U23,EA Champs entry,12.40,England Athletics 2026 Outdoor Championships entry standards v2
+200,F,U16,EA Champs entry,26.40,England Athletics 2026 Outdoor Championships entry standards v2
+200,F,U18,EA Champs entry,26.10,England Athletics 2026 Outdoor Championships entry standards v2
+200,F,U20,EA Champs entry,26.00,England Athletics 2026 Outdoor Championships entry standards v2
+200,F,SEN|U23,EA Champs entry,25.50,England Athletics 2026 Outdoor Championships entry standards v2
+300,F,U16,EA Champs entry,43.00,England Athletics 2026 Outdoor Championships entry standards v2
+400,F,U18,EA Champs entry,68.00,England Athletics 2026 Outdoor Championships entry standards v2
+400,F,U20,EA Champs entry,59.60,England Athletics 2026 Outdoor Championships entry standards v2
+400,F,SEN|U23,EA Champs entry,58.00,England Athletics 2026 Outdoor Championships entry standards v2
+800,F,U16,EA Champs entry,2:18.0,England Athletics 2026 Outdoor Championships entry standards v2
+800,F,U18,EA Champs entry,2:15.0,England Athletics 2026 Outdoor Championships entry standards v2
+800,F,U20,EA Champs entry,2:13.0,England Athletics 2026 Outdoor Championships entry standards v2
+800,F,SEN|U23,EA Champs entry,2:11.0,England Athletics 2026 Outdoor Championships entry standards v2
+1500,F,U16,EA Champs entry,4:47.0,England Athletics 2026 Outdoor Championships entry standards v2
+1500,F,U18,EA Champs entry,4:43.0,England Athletics 2026 Outdoor Championships entry standards v2
+1500,F,U20,EA Champs entry,4:37.0,England Athletics 2026 Outdoor Championships entry standards v2
+1500,F,SEN|U23,EA Champs entry,4:27.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000,F,U16,EA Champs entry,10:50.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000,F,U18,EA Champs entry,10:35.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000,F,U20,EA Champs entry,10:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+5000,F,U20,EA Champs entry,18:45.0,England Athletics 2026 Outdoor Championships entry standards v2
+5000,F,SEN|U23,EA Champs entry,17:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+80H,F,U16,EA Champs entry,12.80,England Athletics 2026 Outdoor Championships entry standards v2
+100H,F,U18,EA Champs entry,16.00,England Athletics 2026 Outdoor Championships entry standards v2
+100H,F,U20,EA Champs entry,16.50,England Athletics 2026 Outdoor Championships entry standards v2
+100H,F,SEN|U23,EA Champs entry,16.00,England Athletics 2026 Outdoor Championships entry standards v2
+300H,F,U16,EA Champs entry,52.00,England Athletics 2026 Outdoor Championships entry standards v2
+400H,F,U18,EA Champs entry,72.00,England Athletics 2026 Outdoor Championships entry standards v2
+400H,F,U20,EA Champs entry,69.00,England Athletics 2026 Outdoor Championships entry standards v2
+400H,F,SEN|U23,EA Champs entry,67.00,England Athletics 2026 Outdoor Championships entry standards v2
+3000W,F,U16,EA Champs entry,19:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000W,F,U18,EA Champs entry,18:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000W,F,U20,EA Champs entry,17:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+3000W,F,SEN|U23,EA Champs entry,17:00.0,England Athletics 2026 Outdoor Championships entry standards v2
+HJ,F,U16,EA Champs entry,1.56,England Athletics 2026 Outdoor Championships entry standards v2
+HJ,F,U18,EA Champs entry,1.64,England Athletics 2026 Outdoor Championships entry standards v2
+HJ,F,U20,EA Champs entry,1.65,England Athletics 2026 Outdoor Championships entry standards v2
+HJ,F,SEN|U23,EA Champs entry,1.72,England Athletics 2026 Outdoor Championships entry standards v2
+LJ,F,U16,EA Champs entry,5.20,England Athletics 2026 Outdoor Championships entry standards v2
+LJ,F,U18,EA Champs entry,5.50,England Athletics 2026 Outdoor Championships entry standards v2
+LJ,F,U20,EA Champs entry,5.65,England Athletics 2026 Outdoor Championships entry standards v2
+LJ,F,SEN|U23,EA Champs entry,6.00,England Athletics 2026 Outdoor Championships entry standards v2
+TJ,F,U16,EA Champs entry,10.20,England Athletics 2026 Outdoor Championships entry standards v2
+TJ,F,U18,EA Champs entry,10.80,England Athletics 2026 Outdoor Championships entry standards v2
+TJ,F,U20,EA Champs entry,11.20,England Athletics 2026 Outdoor Championships entry standards v2
+TJ,F,SEN|U23,EA Champs entry,12.50,England Athletics 2026 Outdoor Championships entry standards v2
+PV,F,U16,EA Champs entry,2.70,England Athletics 2026 Outdoor Championships entry standards v2
+PV,F,U18,EA Champs entry,3.10,England Athletics 2026 Outdoor Championships entry standards v2
+PV,F,U20,EA Champs entry,3.20,England Athletics 2026 Outdoor Championships entry standards v2
+PV,F,SEN|U23,EA Champs entry,3.55,England Athletics 2026 Outdoor Championships entry standards v2
+SP,F,U16,EA Champs entry,11.00,England Athletics 2026 Outdoor Championships entry standards v2
+SP,F,U18,EA Champs entry,12.00,England Athletics 2026 Outdoor Championships entry standards v2
+SP,F,U20,EA Champs entry,11.00,England Athletics 2026 Outdoor Championships entry standards v2
+SP,F,SEN|U23,EA Champs entry,13.00,England Athletics 2026 Outdoor Championships entry standards v2
+DT,F,U16,EA Champs entry,27.00,England Athletics 2026 Outdoor Championships entry standards v2
+DT,F,U18,EA Champs entry,32.00,England Athletics 2026 Outdoor Championships entry standards v2
+DT,F,U20,EA Champs entry,37.00,England Athletics 2026 Outdoor Championships entry standards v2
+DT,F,SEN|U23,EA Champs entry,44.00,England Athletics 2026 Outdoor Championships entry standards v2
+HT,F,U16,EA Champs entry,37.00,England Athletics 2026 Outdoor Championships entry standards v2
+HT,F,U18,EA Champs entry,45.00,England Athletics 2026 Outdoor Championships entry standards v2
+HT,F,U20,EA Champs entry,42.00,England Athletics 2026 Outdoor Championships entry standards v2
+HT,F,SEN|U23,EA Champs entry,54.00,England Athletics 2026 Outdoor Championships entry standards v2
+JT,F,U16,EA Champs entry,31.50,England Athletics 2026 Outdoor Championships entry standards v2
+JT,F,U18,EA Champs entry,38.00,England Athletics 2026 Outdoor Championships entry standards v2
+JT,F,U20,EA Champs entry,37.00,England Athletics 2026 Outdoor Championships entry standards v2
+JT,F,SEN|U23,EA Champs entry,41.50,England Athletics 2026 Outdoor Championships entry standards v2
+Hep,F,U20,EA Champs entry,4100,England Athletics 2026 Outdoor Championships entry standards v2
+Hep,F,SEN|U23,EA Champs entry,4400,England Athletics 2026 Outdoor Championships entry standards v2

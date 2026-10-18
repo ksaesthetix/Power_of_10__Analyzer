@@ -45,5 +45,6 @@ Thumbs.db
 # --- Scratch / local data ---
 _test/
 *.csv
+!standards.csv
 *.parquet
 *.log

@@ -187,6 +187,7 @@ class Performance:
     dob: str = ""
     age_now: Optional[int] = None   # athlete's age in years on the day of the scrape, from "(N YRS)"
     scraped_on: str = ""            # ISO date of the scrape; needed to turn age_now into a DOB window
+    gender: str = ""                # "M" / "F" from the profile, where shown (used for standards lookups)
 
 
 def clean(text: str) -> str:
@@ -390,6 +391,7 @@ def scrape_athlete_performances(
 
     dob = extract_dob(soup)
     age_now = extract_current_age(soup)
+    gender = extract_gender(soup)
     scraped_on = datetime.now().strftime("%Y-%m-%d")
 
     if scope == "career":
@@ -400,6 +402,7 @@ def scrape_athlete_performances(
     for perf in perfs:
         perf.age_now = age_now
         perf.scraped_on = scraped_on
+        perf.gender = gender
     return perfs
 
 
@@ -435,6 +438,17 @@ def extract_current_age(soup: BeautifulSoup) -> Optional[int]:
     # fallback: anywhere on the page (e.g. next to a published DOB)
     m = _AGE_YRS_RE.search(clean(soup.get_text(" ")))
     return int(m.group(1)) if m else None
+
+
+_GENDER_RE = re.compile(r"\bGender\s*:?\s*(Male|Female|Men|Women|M|F)\b", re.I)
+
+
+def extract_gender(soup: BeautifulSoup) -> str:
+    """'M' or 'F' from the profile's Gender row, or '' if not shown."""
+    m = _GENDER_RE.search(clean(soup.get_text(" ")))
+    if not m:
+        return ""
+    return "F" if m.group(1).lower().startswith(("f", "w")) else "M"
 
 
 def build_dataframe(
@@ -503,6 +517,7 @@ def build_dataframe(
             "dob": p.dob,
             "age_now": p.age_now,
             "scraped_on": p.scraped_on,
+            "gender": p.gender,
         }
         for p in all_performances
     ])
@@ -514,14 +529,38 @@ def build_dataframe(
 
 
 def infer_event_kind(event: str) -> str:
-    name = str(event or "").lower()
+    """'time' (lower is better), 'distance' / 'points' (higher is better) or 'other'.
+
+    Handles both descriptive names ("Long Jump") and Po10's short codes
+    ("LJ", "SP4K", "100HW", "2000SC", "4x100", "PenI").
+    """
+    name = str(event or "").strip().lower()
+    code = name.replace(" ", "")
+    if not code:
+        return "other"
+
+    # descriptive names
     if any(keyword in name for keyword in ("jump", "vault", "shot", "discus", "hammer", "javelin", "throw")):
         return "distance"
-    if name in {"long jump", "triple jump", "high jump", "pole vault", "shot put", "discus", "hammer", "javelin"}:
-        return "distance"
-    if re.match(r"^\d+(m)?$", name):
+    if any(keyword in name for keyword in ("marathon", "walk", "steeple", "cross", "hurdles", "mile", "parkrun")):
         return "time"
-    if any(keyword in name for keyword in ("marathon", "walk", "steeple", "cross", "hurdles")):
+
+    # multi-events: points, higher is better
+    if re.match(r"^(dec|hep|pen|oct|hex)[a-z]*(i)?(u\d+)?[wm]?$", code):
+        return "points"
+
+    # jumps / throws short codes, optionally with implement weight (SP4K, DT1.5K, JT600, HT7.26K)
+    if re.match(r"^(lj|tj|hj|pv)(u\d+)?[wm]?$", code):
+        return "distance"
+    if re.match(r"^(sp|dt|ht|jt|wt|bt|ot|cs|ct)(\d+(\.\d+)?k?)?(u\d+)?[wm]?$", code):
+        return "distance"
+
+    # runs: flat, hurdles, steeplechase, walks, relays, road distances
+    if re.match(r"^\d+(m)?$", code):
+        return "time"
+    if re.match(r"^\d+(\.\d+)?(h|sc|w|k|km|m|mile|mi)(w|m)?(u\d+)?[wm]?$", code):
+        return "time"
+    if re.match(r"^\d+x\d+(h)?$", code) or code in {"hm", "mar", "marathon", "1m", "mile", "10k", "5k"}:
         return "time"
     return "other"
 
@@ -540,15 +579,16 @@ def parse_perf_numeric(perf: str, kind: str):
                 parts = [float(part) for part in parts]
             except ValueError:
                 return None
+            # h:mm:ss.cc / mm:ss.cc -> total seconds
             secs = 0.0
-            for part in parts[::-1]:
-                secs = secs / 60.0 + part
+            for part in parts:
+                secs = secs * 60.0 + part
             return secs
         try:
             return float(raw)
         except ValueError:
             return None
-    if kind == "distance":
+    if kind in ("distance", "points"):
         try:
             return float(raw)
         except ValueError:
