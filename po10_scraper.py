@@ -28,12 +28,46 @@ HEADERS = {
 REQUEST_DELAY = 1.5
 
 # Environment variables consulted when credentials aren't passed explicitly
+COOKIE_ENV = "PO10_COOKIE"
 USERNAME_ENV = "PO10_USERNAME"
 PASSWORD_ENV = "PO10_PASSWORD"
+COOKIE_DOMAIN = "www.powerof10.uk"
 
 
 class Po10AuthError(Exception):
     """Raised when Power of 10 requires a sign-in that failed or wasn't supplied."""
+
+
+def apply_cookie_header(session: requests.Session, cookie_header: str) -> None:
+    """Load a browser's ``Cookie:`` header value into ``session``.
+
+    Power of 10's sign-in form is protected by reCAPTCHA, so the supported
+    route is: sign in once in a normal browser, then reuse that browser
+    session here. ``cookie_header`` is the raw header value, e.g.
+    ``"name1=value1; name2=value2"`` (a leading ``Cookie:`` prefix is tolerated).
+    """
+    raw = (cookie_header or "").strip()
+    if raw.lower().startswith("cookie:"):
+        raw = raw[len("cookie:"):].strip()
+    if not raw:
+        raise Po10AuthError("The Power of 10 session cookie is empty.")
+
+    loaded = 0
+    for part in raw.split(";"):
+        if "=" not in part:
+            continue
+        name, value = part.split("=", 1)
+        name, value = name.strip(), value.strip()
+        if not name:
+            continue
+        session.cookies.set(name, value, domain=COOKIE_DOMAIN, path="/")
+        loaded += 1
+
+    if loaded == 0:
+        raise Po10AuthError(
+            "Could not parse the Power of 10 session cookie. Paste the full "
+            "'Cookie' request-header value from your browser's developer tools."
+        )
 
 
 def _is_login_url(url: str) -> bool:
@@ -76,6 +110,18 @@ def login(session: requests.Session, username: str, password: str) -> None:
     form = _find_login_form(soup)
     if form is None:
         raise Po10AuthError("Could not find the sign-in form on the Power of 10 login page.")
+
+    has_captcha = (
+        form.find(attrs={"name": "g-recaptcha-response"}) is not None
+        or form.find(class_=re.compile(r"g-recaptcha")) is not None
+        or soup.find("script", src=re.compile(r"recaptcha", re.I)) is not None
+    )
+    if has_captcha:
+        raise Po10AuthError(
+            "The Power of 10 sign-in form uses reCAPTCHA, which a script cannot complete. "
+            "Sign in once in your browser and supply the session cookie instead "
+            f"(see apply_cookie_header / {COOKIE_ENV})."
+        )
 
     payload: dict[str, str] = {}
     username_field: Optional[str] = None
@@ -154,8 +200,9 @@ def get_soup(url: str, session: requests.Session) -> Optional[BeautifulSoup]:
 
     if _is_login_url(response.url):
         raise Po10AuthError(
-            "Power of 10 redirected to its sign-in page. Supply a valid username and "
-            f"password (or set {USERNAME_ENV} / {PASSWORD_ENV}) and try again."
+            "Power of 10 redirected to its sign-in page: the session cookie is missing, "
+            "expired or invalid. Sign in again in your browser and paste a fresh cookie "
+            f"(or set {COOKIE_ENV})."
         )
     return BeautifulSoup(response.text, "html.parser")
 
@@ -360,25 +407,34 @@ def build_dataframe(
     coach_id: str = "",
     athlete_ids: Optional[list[str]] = None,
     scope: str = "career",
+    cookie_header: Optional[str] = None,
     username: Optional[str] = None,
     password: Optional[str] = None,
 ) -> pd.DataFrame:
     """Scrape performances for a coach's athletes and/or explicit athlete IDs.
 
-    Power of 10 now requires an account to view athlete data. Credentials are
-    taken from ``username``/``password`` if given, otherwise from the
-    ``PO10_USERNAME`` / ``PO10_PASSWORD`` environment variables. Raises
-    ``Po10AuthError`` if the sign-in fails or the site demands one.
+    Power of 10 now requires an account to view athlete data, and its sign-in
+    form is protected by reCAPTCHA. The supported route is to sign in once in
+    a browser and pass that session's ``Cookie`` header value as
+    ``cookie_header`` (or via the ``PO10_COOKIE`` environment variable).
+
+    ``username``/``password`` (or ``PO10_USERNAME``/``PO10_PASSWORD``) are
+    only attempted when no cookie is given, and will fail while the form
+    carries a CAPTCHA. Raises ``Po10AuthError`` when the site demands a
+    sign-in that wasn't satisfied.
     """
     athlete_ids = athlete_ids or []
     athlete_roster: list[tuple[str, str]] = [(aid, "") for aid in athlete_ids if aid]
 
+    cookie_header = cookie_header or os.environ.get(COOKIE_ENV, "")
     username = username or os.environ.get(USERNAME_ENV, "")
     password = password or os.environ.get(PASSWORD_ENV, "")
 
     with requests.Session() as session:
+        if cookie_header:
+            apply_cookie_header(session, cookie_header)
         session.get(BASE_URL + "/", headers=HEADERS, timeout=15)
-        if username and password:
+        if not cookie_header and username and password:
             login(session, username, password)
         if coach_id:
             roster = get_athlete_ids_from_coach(coach_id, session)
@@ -464,8 +520,8 @@ def parse_perf_numeric(perf: str, kind: str):
 
 
 if __name__ == "__main__":
-    # Quick smoke test for the sign-in + scrape, outside Streamlit:
-    #   PO10_USERNAME=... PO10_PASSWORD=... python po10_scraper.py --coach <coach_id>
+    # Quick smoke test for the session cookie + scrape, outside Streamlit:
+    #   PO10_COOKIE='name=value; name2=value2' python po10_scraper.py --coach <coach_id>
     import argparse
 
     parser = argparse.ArgumentParser(description="Check Power of 10 sign-in and scraping.")
