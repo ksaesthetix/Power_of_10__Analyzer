@@ -185,6 +185,8 @@ class Performance:
     age_group: str = ""
     was_pb: bool = False
     dob: str = ""
+    age_now: Optional[int] = None   # athlete's age in years on the day of the scrape, from "(N YRS)"
+    scraped_on: str = ""            # ISO date of the scrape; needed to turn age_now into a DOB window
 
 
 def clean(text: str) -> str:
@@ -386,21 +388,53 @@ def scrape_athlete_performances(
     if not athlete_name:
         athlete_name = clean(athlete_id)
 
-    # extract DOB from athlete page if present
-    dob = ""
-    dob_div = soup.find("div", class_=re.compile(r"\bdob\b", re.I))
-    if dob_div:
-        strong = dob_div.find("strong")
-        if strong:
-            dob_text = clean(strong.get_text())
-            # dob_text may look like '18 November 2000 (25 YRS)'
-            m = re.search(r"([0-9]{1,2}\s+\w+\s+[0-9]{4})", dob_text)
-            if m:
-                dob = m.group(1)
+    dob = extract_dob(soup)
+    age_now = extract_current_age(soup)
+    scraped_on = datetime.now().strftime("%Y-%m-%d")
 
     if scope == "career":
-        return parse_career_js_arrays(soup, athlete_id, athlete_name, dob=dob)
-    return parse_griddata_json(soup, athlete_id, athlete_name, dob=dob)
+        perfs = parse_career_js_arrays(soup, athlete_id, athlete_name, dob=dob)
+    else:
+        perfs = parse_griddata_json(soup, athlete_id, athlete_name, dob=dob)
+
+    for perf in perfs:
+        perf.age_now = age_now
+        perf.scraped_on = scraped_on
+    return perfs
+
+
+def extract_dob(soup: BeautifulSoup) -> str:
+    """Full date of birth, e.g. '18 November 2000' — only published for some athletes."""
+    dob_div = soup.find("div", class_=re.compile(r"\bdob\b", re.I))
+    if not dob_div:
+        return ""
+    strong = dob_div.find("strong")
+    if not strong:
+        return ""
+    # text may look like '18 November 2000 (25 YRS)'
+    m = re.search(r"([0-9]{1,2}\s+\w+\s+[0-9]{4})", clean(strong.get_text()))
+    return m.group(1) if m else ""
+
+
+_AGE_YRS_RE = re.compile(r"\((\d{1,3})\s*YRS?\)", re.I)
+
+
+def extract_current_age(soup: BeautifulSoup) -> Optional[int]:
+    """Athlete's age in whole years as shown on the profile, e.g. 'Sen (28 YRS)'.
+
+    Po10 renders this inside the age-group element:
+        <strong><span id="divAllAgeGroup">Sen</span> ... (28 YRS)</strong>
+    Shown for every athlete, unlike the DOB, so it's the reliable source for
+    working out how old someone was at each performance.
+    """
+    span = soup.find("span", id="divAllAgeGroup")
+    if span is not None and span.parent is not None:
+        m = _AGE_YRS_RE.search(clean(span.parent.get_text(" ")))
+        if m:
+            return int(m.group(1))
+    # fallback: anywhere on the page (e.g. next to a published DOB)
+    m = _AGE_YRS_RE.search(clean(soup.get_text(" ")))
+    return int(m.group(1)) if m else None
 
 
 def build_dataframe(
@@ -467,12 +501,15 @@ def build_dataframe(
             "age_group": p.age_group,
             "was_pb": p.was_pb,
             "dob": p.dob,
+            "age_now": p.age_now,
+            "scraped_on": p.scraped_on,
         }
         for p in all_performances
     ])
     if not df.empty:
         df["year"] = pd.to_numeric(df["year"], errors="coerce")
         df["position"] = pd.to_numeric(df["position"], errors="coerce")
+        df["age_now"] = pd.to_numeric(df["age_now"], errors="coerce")
     return df
 
 

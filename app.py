@@ -669,40 +669,65 @@ def render_performance_vs_age(df):
     age_df = get_performance_vs_age(filtered_df)
     
     if age_df.empty:
-        st.info("No age-based performance data available.")
+        st.info(
+            "No age data available — Po10 didn't show a date of birth or a "
+            "current age for these athletes. Try Refresh Data to re-scrape."
+        )
         return
 
     events = sorted(age_df["event"].unique().tolist())
     event_choice = st.selectbox("Select event", events, key="age_event_choice")
     subset = age_df[age_df["event"] == event_choice]
+
+    n_estimated = int((subset["age_source"] == "estimated").sum())
+    if n_estimated:
+        st.caption(
+            f"Ages for {n_estimated} of {len(subset)} performances are estimated from "
+            "the athlete's current age on Po10 (accurate to ±6 months); the rest use "
+            "a published date of birth."
+        )
+
+    hover = {
+        "age_decimal": ":.1f",
+        "age": True,
+        "age_group": True,
+        "performance": True,
+        "date": True,
+        "year": True,
+        "athlete_name": False,
+    }
+
     # Prefer to show an OLS trendline when available (requires statsmodels).
     # If statsmodels is not installed in the environment, fall back to a
     # scatter without the trendline and inform the user.
     try:
         fig = px.scatter(
             subset,
-            x="age",
+            x="age_decimal",
             y="perf_numeric",
             color="athlete_name",
             trendline="ols",
-            hover_data=["performance", "year", "age_group"],
+            hover_data=hover,
             template="plotly_dark",
             title=f"{event_choice} Performance vs Age",
         )
     except ModuleNotFoundError:
         fig = px.scatter(
             subset,
-            x="age",
+            x="age_decimal",
             y="perf_numeric",
             color="athlete_name",
-            hover_data=["performance", "year", "age_group"],
+            hover_data=hover,
             template="plotly_dark",
             title=f"{event_choice} Performance vs Age (trendline unavailable)",
         )
         st.info("Trendline unavailable: install 'statsmodels' to enable OLS trendlines.")
 
+    fig.update_xaxes(title="Age at performance (years)")
     if subset["is_track"].iloc[0]:
-        fig.update_yaxes(autorange="reversed")
+        fig.update_yaxes(title="Seconds", autorange="reversed")
+    else:
+        fig.update_yaxes(title="Metres")
 
     fig.update_layout(margin=dict(l=20, r=20, t=50, b=20))
     st.plotly_chart(fig, use_container_width=True)

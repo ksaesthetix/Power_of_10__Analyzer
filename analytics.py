@@ -1,6 +1,7 @@
 # analytics.py
 
 import re
+import numpy as np
 import pandas as pd
 from datetime import datetime
 from po10_scraper import infer_event_kind, parse_perf_numeric
@@ -43,40 +44,73 @@ def prepare_analytics_df(df: pd.DataFrame) -> pd.DataFrame:
 
     analytics_df["year"] = analytics_df["year"].astype(int)
 
-    # parse DOB if available and compute age at performance
-    if "dob" in analytics_df.columns:
-        # try to parse DOB - many pages use formats like '18 November 2000'
-        analytics_df["dob_parsed"] = pd.to_datetime(
-            analytics_df["dob"], dayfirst=True, errors="coerce"
-        )
-
-        # parse performance date where available
-        analytics_df["perf_date_parsed"] = pd.to_datetime(
-            analytics_df["date"], dayfirst=True, errors="coerce"
-        )
-
-        # fallback: where perf_date_parsed is NaT, set to Jan 1 of the performance year
-        missing_perf_dates = analytics_df["perf_date_parsed"].isna()
-        if missing_perf_dates.any():
-            analytics_df.loc[missing_perf_dates, "perf_date_parsed"] = pd.to_datetime(
-                analytics_df.loc[missing_perf_dates, "year"].astype(str) + "-01-01"
-            )
-
-        # compute age in years (floor)
-        def compute_age(row):
-            dob = row.get("dob_parsed")
-            perf = row.get("perf_date_parsed")
-            if pd.isna(dob) or pd.isna(perf):
-                return None
-            # compute full years difference, adjusting for month/day
-            years = perf.year - dob.year
-            if (perf.month, perf.day) < (dob.month, dob.day):
-                years -= 1
-            return int(years)
-
-        analytics_df["age"] = analytics_df.apply(compute_age, axis=1)
+    analytics_df = add_age_at_performance(analytics_df)
 
     return analytics_df
+
+
+# =========================================================
+# AGE AT PERFORMANCE
+# =========================================================
+
+DAYS_PER_YEAR = 365.25
+
+
+def add_age_at_performance(df: pd.DataFrame) -> pd.DataFrame:
+    """Add ``age`` (whole years), ``age_decimal`` and ``age_source`` columns.
+
+    Two sources, in order of preference:
+
+    * ``dob`` — a full date of birth, which Po10 only publishes for some
+      athletes. Gives the exact age.  ``age_source == "dob"``.
+    * ``age_now`` + ``scraped_on`` — the "(N YRS)" shown on every profile,
+      read on the scrape date. Someone who is N today was born in the year
+      ending N years ago, so we take the midpoint of that window as the DOB;
+      ages derived from it are accurate to within six months.
+      ``age_source == "estimated"``.
+
+    Rows with neither get NaN ages and ``age_source`` of None.
+    """
+    df = df.copy()
+    n = len(df)
+
+    # performance date; fall back to mid-season when only the year is known
+    df["perf_date_parsed"] = pd.to_datetime(df["date"], dayfirst=True, errors="coerce")
+    missing = df["perf_date_parsed"].isna()
+    if missing.any():
+        df.loc[missing, "perf_date_parsed"] = pd.to_datetime(
+            df.loc[missing, "year"].astype(int).astype(str) + "-07-01"
+        )
+
+    # exact DOB, when published (e.g. '18 November 2000')
+    if "dob" in df.columns:
+        dob_parsed = pd.to_datetime(df["dob"], dayfirst=True, errors="coerce")
+    else:
+        dob_parsed = pd.Series(pd.NaT, index=df.index, dtype="datetime64[ns]")
+
+    # estimated DOB from current age on the day of the scrape
+    if {"age_now", "scraped_on"}.issubset(df.columns):
+        scraped = pd.to_datetime(df["scraped_on"], errors="coerce")
+        age_now = pd.to_numeric(df["age_now"], errors="coerce")
+        dob_estimated = scraped - pd.to_timedelta((age_now + 0.5) * DAYS_PER_YEAR, unit="D")
+    else:
+        dob_estimated = pd.Series(pd.NaT, index=df.index, dtype="datetime64[ns]")
+
+    df["dob_parsed"] = dob_parsed
+    df["dob_estimated"] = dob_estimated
+
+    effective_dob = dob_parsed.fillna(dob_estimated)
+    df["age_source"] = np.select(
+        [dob_parsed.notna(), dob_estimated.notna()],
+        ["dob", "estimated"],
+        default=None,
+    ) if n else pd.Series(dtype="object")
+
+    days_old = (df["perf_date_parsed"] - effective_dob).dt.days
+    df["age_decimal"] = (days_old / DAYS_PER_YEAR).round(2)
+    df["age"] = np.floor(df["age_decimal"]).astype("Int64")
+
+    return df
 
 
 # =========================================================
@@ -221,23 +255,15 @@ def get_performance_distribution(df: pd.DataFrame) -> pd.DataFrame:
 # PERFORMANCE VS AGE
 # =========================================================
 
-def _extract_age(age_group: str):
-    if not age_group:
-        return None
-    match = re.search(r"(\d{1,2})", str(age_group))
-    if match:
-        return int(match.group(1))
-    return None
-
-
 def get_performance_vs_age(df: pd.DataFrame) -> pd.DataFrame:
+    """Rows with a real age at performance (from DOB or the estimated DOB).
 
-    df = df.copy()
-    # prefer computed age (from DOB) when available; otherwise fall back to age_group
-    if "age" not in df.columns or df["age"].isna().all():
-        df["age"] = df["age_group"].apply(_extract_age)
-
-    return df[df["age"].notna() & df["perf_numeric"].notna()].copy()
+    Age-group labels are deliberately NOT used as a fallback: "U20" says only
+    that the athlete was 17-19, so plotting it as 20 would be misleading.
+    """
+    if not {"age_decimal", "perf_numeric"}.issubset(df.columns):
+        return df.iloc[0:0].copy()
+    return df[df["age_decimal"].notna() & df["perf_numeric"].notna()].copy()
 
 
 # =========================================================
