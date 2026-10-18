@@ -277,37 +277,47 @@ with st.sidebar:
 
     coach_id = DEFAULT_COACH_ID
 
-    # ---- Power of 10 sign-in ----
-    # Power of 10 now requires an account to view athlete data. Seed the
-    # inputs once from .streamlit/secrets.toml ([po10] username/password)
-    # or the PO10_USERNAME / PO10_PASSWORD env vars; after that the
-    # session_state values are the source of truth.
+    # ---- Power of 10 session ----
+    # Po10 now requires an account to view athlete data, and its sign-in
+    # form is behind reCAPTCHA, so the app can't log in by itself. Instead,
+    # sign in once in your browser and paste that session's Cookie header
+    # here. Seeded once from .streamlit/secrets.toml ([po10] cookie) or the
+    # PO10_COOKIE env var; after that session_state is the source of truth.
     def _po10_secret(key: str) -> str:
         try:
             return str(st.secrets["po10"][key])
         except Exception:
             return ""
 
-    if "po10_username" not in st.session_state:
-        st.session_state["po10_username"] = (
-            _po10_secret("username") or os.environ.get("PO10_USERNAME", "")
-        )
-    if "po10_password" not in st.session_state:
-        st.session_state["po10_password"] = (
-            _po10_secret("password") or os.environ.get("PO10_PASSWORD", "")
+    if "po10_cookie" not in st.session_state:
+        st.session_state["po10_cookie"] = (
+            _po10_secret("cookie") or os.environ.get("PO10_COOKIE", "")
         )
 
-    creds_missing = not (
-        st.session_state["po10_username"] and st.session_state["po10_password"]
-    )
+    cookie_missing = not st.session_state["po10_cookie"].strip()
 
-    with st.expander("Power of 10 sign-in", expanded=creds_missing):
+    with st.expander("Power of 10 session", expanded=cookie_missing):
         st.caption(
-            "Po10 now requires an account to view athlete data. "
-            "Credentials are held in memory for this session only."
+            "Po10 requires a signed-in account. Sign in at powerof10.uk in "
+            "your browser, then paste your session cookie here. It is held in "
+            "memory for this session only."
         )
-        st.text_input("Username", key="po10_username")
-        st.text_input("Password", type="password", key="po10_password")
+        st.text_input(
+            "Session cookie",
+            type="password",
+            key="po10_cookie",
+            placeholder="name=value; name2=value2; ...",
+        )
+        with st.popover("How do I get this?"):
+            st.markdown(
+                """
+1. Sign in at **powerof10.uk** in your browser (complete the reCAPTCHA).
+2. Press **F12** → **Network** tab, then reload any Po10 page.
+3. Click the first request to `www.powerof10.uk`.
+4. Under **Request Headers**, copy the whole value of the **Cookie** line.
+5. Paste it here. Repeat when it expires — the app will tell you.
+                """
+            )
 
     scrape_button = st.button("Refresh Data")
 
@@ -317,15 +327,14 @@ with st.sidebar:
 # =========================================================
 
 @st.cache_data(show_spinner=False)
-def load_data(coach_id: str, _username: str, _password: str):
-    # Leading underscores keep the credentials out of the cache key, so the
-    # password is never hashed/stored by st.cache_data.
+def load_data(coach_id: str, _cookie: str):
+    # Leading underscore keeps the cookie out of the cache key, so the
+    # session token is never hashed/stored by st.cache_data.
     return build_dataframe(
         coach_id=coach_id,
         athlete_ids=[],
         scope="career",
-        username=_username,
-        password=_password,
+        cookie_header=_cookie,
     )
 
 
@@ -338,27 +347,25 @@ if scrape_button:
 
 if st.session_state.get("df") is None:
 
-    po10_username = st.session_state.get("po10_username", "").strip()
-    po10_password = st.session_state.get("po10_password", "")
+    po10_cookie = st.session_state.get("po10_cookie", "").strip()
 
-    if not po10_username or not po10_password:
+    if not po10_cookie:
         st.info(
-            "Enter your Power of 10 username and password in the sidebar "
+            "Paste your Power of 10 session cookie in the sidebar "
             "to load athlete data."
         )
         st.stop()
 
     with st.spinner(
-        "Signing in and scraping Power of 10..."
+        "Scraping Power of 10..."
     ):
         try:
             st.session_state["df"] = load_data(
                 coach_id,
-                po10_username,
-                po10_password,
+                po10_cookie,
             )
         except Po10AuthError as exc:
-            st.error(f"Power of 10 sign-in failed: {exc}")
+            st.error(f"Power of 10 session problem: {exc}")
             st.stop()
 
 
