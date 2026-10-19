@@ -996,7 +996,7 @@ def load_standards(path: str) -> pd.DataFrame:
     # school-year standard matches both the old and new Po10 age-group labels)
     std["age_group"] = std["age_group"].str.upper().str.split("|")
     std = std.explode("age_group")
-    std["age_group"] = std["age_group"].str.strip()
+    std["age_group"] = std["age_group"].apply(normalise_age_group)
     std = std[std["age_group"] != ""]
     std["kind"] = std["event"].apply(infer_event_kind)
     std["standard_numeric"] = [parse_perf_numeric(v, k) for v, k in zip(std["standard"], std["kind"])]
@@ -1004,12 +1004,21 @@ def load_standards(path: str) -> pd.DataFrame:
     return std
 
 
-def compare_to_standards(df: pd.DataFrame, standards: pd.DataFrame) -> pd.DataFrame:
-    """Best mark per athlete/event/age-group against the standards for that group."""
+def compare_to_standards(df: pd.DataFrame, standards: pd.DataFrame, sex_overrides: Optional[dict] = None) -> pd.DataFrame:
+    """Best mark per athlete/event/age-group against the standards for that group.
+
+    Age groups come from Po10's per-performance label (normalised), falling back
+    to a label derived from the athlete's age when Po10's is blank or odd. Sex
+    comes from the profile, the age-group suffix, or ``sex_overrides``
+    ({athlete_name: "M"/"F"}).
+    """
     rows = []
-    ag = df["age_group"].astype(str).str.strip().str.upper()
-    sex = df["gender"].astype(str).str.strip().str.upper().str[:1] if "gender" in df.columns else pd.Series("", index=df.index)
+    if df.empty or standards.empty:
+        return pd.DataFrame()
+    ag = resolve_age_groups(df)
+    sex = resolve_sex(df, sex_overrides)
     tmp = df.assign(_ag=ag, _sex=sex)
+    tmp = tmp[tmp["_ag"] != ""]
     for (athlete, code, group), g in tmp.groupby(["athlete_name", "event_code", "_ag"]):
         is_track = bool(g["is_track"].iloc[0])
         idx = g["perf_numeric"].idxmin() if is_track else g["perf_numeric"].idxmax()
@@ -1038,3 +1047,116 @@ def compare_to_standards(df: pd.DataFrame, standards: pd.DataFrame) -> pd.DataFr
         })
     out = pd.DataFrame(rows)
     return out.sort_values(["athlete_name", "event", "age_group"]) if not out.empty else out
+
+
+# =========================================================
+# AGE-GROUP LABEL HANDLING (for standards matching)
+# =========================================================
+
+def normalise_age_group(label) -> str:
+    """Collapse Po10 / governing-body age-group labels to one form.
+
+    'U20M', 'U20 W', 'u20' -> 'U20'; 'SENM', 'SM', 'Senior', 'SEN W' -> 'SEN';
+    'V35W', 'M35', 'W40' -> 'V35' / 'V40'. Unknown labels are returned upper-cased.
+    """
+    s = re.sub(r"\s+", "", str(label or "")).upper()
+    if not s or s in ("NAN", "NONE"):
+        return ""
+    s = s.replace("SENIOR", "SEN")
+    if s in ("SM", "SW", "S", "SENIORS"):
+        return "SEN"
+    m = re.match(r"^(U\d{2}|V\d{2}|SEN)[MWF]?$", s)
+    if m:
+        return m.group(1)
+    m = re.match(r"^[MW](\d{2})$", s)          # masters written as M35 / W40
+    if m:
+        return "V" + m.group(1)
+    return s
+
+
+def sex_from_age_group(label) -> str:
+    """'U20M' -> 'M', 'U17W' -> 'F', otherwise ''."""
+    s = re.sub(r"\s+", "", str(label or "")).upper()
+    m = re.match(r"^(?:U\d{2}|V\d{2}|SEN)([MWF])$", s)
+    if not m:
+        return ""
+    return "F" if m.group(1) in ("W", "F") else "M"
+
+
+def _age_on(dob: pd.Timestamp, on: pd.Timestamp) -> int:
+    years = on.year - dob.year
+    if (on.month, on.day) < (dob.month, dob.day):
+        years -= 1
+    return years
+
+
+def age_group_from_dob(dob, year: int) -> str:
+    """Po10-style age-group label for a performance in ``year`` by someone born ``dob``.
+
+    Used only when the scraped label is blank/unrecognised. From 2026 UK
+    athletics uses even groups decided by age on 31 December (U14/U16/U18/U20);
+    before that U13/U15/U17 went by age on the previous 31 August and U20 by
+    age on 31 December. Masters bands are five years from 35.
+    """
+    if dob is None or pd.isna(dob):
+        return ""
+    year = int(year)
+    on_dec31 = _age_on(dob, pd.Timestamp(year=year, month=12, day=31))
+    if year >= 2026:
+        for cap, label in ((13, "U14"), (15, "U16"), (17, "U18"), (19, "U20"), (22, "U23")):
+            if on_dec31 <= cap:
+                return label
+    else:
+        on_aug31 = _age_on(dob, pd.Timestamp(year=year - 1, month=8, day=31))
+        for cap, label in ((12, "U13"), (14, "U15"), (16, "U17")):
+            if on_aug31 <= cap:
+                return label
+        for cap, label in ((19, "U20"), (22, "U23")):
+            if on_dec31 <= cap:
+                return label
+    if on_dec31 < 35:
+        return "SEN"
+    return f"V{(on_dec31 // 5) * 5}"
+
+
+def resolve_age_groups(df: pd.DataFrame) -> pd.Series:
+    """Normalised age-group label per row, derived from age where Po10's label is unusable."""
+    labels = df["age_group"].apply(normalise_age_group) if "age_group" in df.columns else pd.Series("", index=df.index)
+    known = labels.str.match(r"^(U\d{2}|V\d{2}|SEN)$")
+    if known.all():
+        return labels
+    dob = pd.Series(pd.NaT, index=df.index, dtype="datetime64[ns]")
+    if "dob_parsed" in df.columns:
+        dob = df["dob_parsed"]
+    if "dob_estimated" in df.columns:
+        dob = dob.fillna(df["dob_estimated"])
+    derived = pd.Series([age_group_from_dob(d, y) for d, y in zip(dob, df["year"])], index=df.index)
+    return labels.where(known, derived)
+
+
+def resolve_sex(df: pd.DataFrame, overrides: Optional[dict] = None) -> pd.Series:
+    """'M'/'F'/'' per row: scraped gender, else age-group suffix, else per-athlete override."""
+    sex = df["gender"].astype(str).str.strip().str.upper().str[:1] if "gender" in df.columns else pd.Series("", index=df.index)
+    sex = sex.replace({"N": ""})  # 'nan'
+    from_ag = df["age_group"].apply(sex_from_age_group) if "age_group" in df.columns else pd.Series("", index=df.index)
+    sex = sex.where(sex != "", from_ag)
+    if overrides:
+        mapped = df["athlete_name"].map(lambda n: str(overrides.get(n, "") or "").upper()[:1])
+        sex = sex.where(sex != "", mapped.fillna(""))
+    return sex.fillna("")
+
+
+def standards_match_diagnostics(df: pd.DataFrame, standards: pd.DataFrame) -> dict:
+    """What the data and the standards file each contain, to explain a non-match."""
+    raw_labels = sorted(df["age_group"].dropna().astype(str).unique().tolist()) if "age_group" in df.columns else []
+    resolved = sorted(resolve_age_groups(df).replace("", pd.NA).dropna().unique().tolist()) if not df.empty else []
+    data_events = sorted(df["event_code"].dropna().unique().tolist()) if "event_code" in df.columns else []
+    return {
+        "data_age_group_labels_raw": raw_labels,
+        "data_age_groups_resolved": resolved,
+        "data_event_codes": data_events,
+        "standards_age_groups": sorted(standards["age_group"].unique().tolist()),
+        "standards_event_codes": sorted(standards["event_code"].unique().tolist()),
+        "overlap_age_groups": sorted(set(resolved) & set(standards["age_group"])),
+        "overlap_event_codes": sorted(set(data_events) & set(standards["event_code"])),
+    }

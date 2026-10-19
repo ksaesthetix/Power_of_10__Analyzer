@@ -46,6 +46,7 @@ from analytics import (
     EVENT_RATIO_BENCHMARKS,
     load_standards,
     compare_to_standards,
+    standards_match_diagnostics,
     STANDARDS_COLUMNS,
 )
 
@@ -1364,14 +1365,38 @@ def render_standards(df):
         st.info("No standards loaded yet.")
         return
     st.caption(source_note)
-    if "gender" in df.columns and (df["gender"].astype(str).str.strip() == "").all():
-        st.caption("Po10 profiles didn't expose a gender, so sex-specific standards are matched to everyone - add a blank-sex row or check the scrape.")
+
+    # Sex per athlete: Po10 doesn't always expose it, and most standards are
+    # sex-specific. Let the user fill the gaps; choices live in session_state.
+    sex_overrides = {}
+    known_sex = df.groupby("athlete_name")["gender"].agg(lambda g: next((x for x in g.astype(str) if x.strip()), "")) if "gender" in df.columns else {}
+    missing = [a for a in sorted(df["athlete_name"].unique()) if a not in EXCLUDED_ATHLETES and not str(known_sex.get(a, "")).strip()]
+    if missing:
+        with st.expander(f"Set sex for {len(missing)} athlete(s) Po10 didn't expose it for", expanded=True):
+            st.caption("Needed to pick the right standards. Unknown athletes are matched against both men's and women's standards.")
+            cols = st.columns(min(4, len(missing)))
+            for i, name in enumerate(missing):
+                with cols[i % len(cols)]:
+                    choice = st.selectbox(name, ["Unknown", "M", "F"], key=f"sex_override_{name}")
+                if choice != "Unknown":
+                    sex_overrides[name] = choice
 
     athletes_list, events_list, _, indoor_list, wind_list = get_page_filters(df, "Standards", include_years=False)
     filtered_df = apply_filters(df, athletes_list, events_list, [], indoor_list, wind_list)
-    cmp = compare_to_standards(filtered_df, standards)
+    cmp = compare_to_standards(filtered_df, standards, sex_overrides=sex_overrides)
     if cmp.empty:
-        st.info("None of the loaded standards match an athlete/event/age-group in the selection. Check the event codes and age-group labels in the CSV.")
+        st.info("None of the loaded standards match an athlete/event/age-group in the selection.")
+        diag = standards_match_diagnostics(filtered_df, standards)
+        with st.expander("Why not? What the data and the standards each contain", expanded=True):
+            c1, c2 = st.columns(2)
+            c1.markdown("**Your data**")
+            c1.write({"age-group labels as scraped": diag["data_age_group_labels_raw"],
+                      "age groups after normalising": diag["data_age_groups_resolved"],
+                      "event codes": diag["data_event_codes"]})
+            c2.markdown("**Standards file**")
+            c2.write({"age groups": diag["standards_age_groups"], "event codes": diag["standards_event_codes"]})
+            st.markdown(f"**Overlap** - age groups: `{diag['overlap_age_groups'] or 'none'}`, event codes: `{diag['overlap_event_codes'] or 'none'}`")
+            st.caption("If the scraped labels look unlike U17 / U20 / SEN, paste them into the chat and the matcher can be taught them.")
         return
     c1, c2 = st.columns(2)
     c1.metric("Athlete/event/age-group rows", len(cmp))

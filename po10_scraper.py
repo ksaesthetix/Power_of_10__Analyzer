@@ -440,7 +440,7 @@ def extract_current_age(soup: BeautifulSoup) -> Optional[int]:
     return int(m.group(1)) if m else None
 
 
-_GENDER_RE = re.compile(r"\bGender\s*:?\s*(Male|Female|Men|Women|M|F)\b", re.I)
+_GENDER_RE = re.compile(r"\b(?:Gender|Sex)\s*:?\s*(Male|Female|Men|Women|Man|Woman|M|F)\b", re.I)
 
 
 def extract_gender(soup: BeautifulSoup) -> str:
